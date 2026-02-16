@@ -1,0 +1,4665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="EduTrack MIS V1.0 - Final Edition" />
+  <title>EduTrack MIS V1.0 – Final Edition</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       EDUTRACK MIS V1.0 – FINAL EDITION
+       Clean Rebuild (B) — Polished MIS UI + Modular Engine
+       ============================================================ */
+
+    :root{
+      --primary:#0f172a;
+      --primary2:#1e293b;
+      --accent:#3b82f6;
+      --accentHover:#2563eb;
+
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --muted:#64748b;
+      --border:#e2e8f0;
+
+      --danger:#ef4444;
+      --dangerHover:#dc2626;
+      --warning:#f59e0b;
+      --success:#10b981;
+
+      --radius:14px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:0 6px 18px rgba(15,23,42,.08);
+
+      --sidebar:285px;
+      --header:72px;
+
+      --mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --font:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:var(--font);
+      background:var(--bg);
+      color:var(--primary);
+      overflow:hidden;
+    }
+
+    /* ========================= AUTH PORTAL ========================= */
+    #auth-portal{
+      position:fixed; inset:0;
+      /* Fancy MIS-style login backdrop (no external assets) */
+      background:
+        radial-gradient(1200px 800px at 10% 15%, rgba(59,130,246,.30), transparent 55%),
+        radial-gradient(900px 700px at 85% 25%, rgba(16,185,129,.22), transparent 55%),
+        radial-gradient(900px 700px at 30% 95%, rgba(245,158,11,.14), transparent 60%),
+        linear-gradient(135deg, #0b1220, #0f172a 45%, #101b33);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:9999;
+      overflow:hidden;
+    }
+    #auth-portal::before{
+      content:"";
+      position:absolute;
+      inset:-120px;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.08), transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.06), transparent 40%),
+        radial-gradient(circle at 40% 85%, rgba(255,255,255,.05), transparent 45%);
+      filter: blur(0px);
+      opacity: .9;
+      pointer-events:none;
+    }
+    #auth-portal::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity:.10;
+      pointer-events:none;
+    }
+    .auth-card{
+      width:100%;
+      max-width:480px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(226,232,240,.22);
+      border-radius:24px;
+      box-shadow: 0 28px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .auth-card .top{
+      padding:18px 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+      border-bottom:1px solid rgba(226,232,240,.22);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .auth-logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,.9), rgba(37,99,235,.6));
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:1000;
+      letter-spacing:.4px;
+    }
+    .auth-title{
+      color:#fff;
+      font-weight:1000;
+      font-size:18px;
+      line-height:1.1;
+    }
+    .auth-subtitle{
+      color:rgba(226,232,240,.85);
+      font-weight:700;
+      font-size:12px;
+      margin-top:2px;
+    }
+    .auth-top{
+      padding:20px 22px;
+      border-bottom:1px solid rgba(226,232,240,.18);
+      background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .auth-top::before{
+      content:"ET";
+      width:44px; height:44px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:1000;
+      letter-spacing:.5px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,.95), rgba(37,99,235,.55));
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+    .auth-top .brand{
+      color:#fff;
+      font-weight:1000;
+      font-size:18px;
+      line-height:1.1;
+      letter-spacing:.2px;
+    }
+    .auth-top .brand span{opacity:.92}
+    .auth-top .sub{
+      margin-top:2px;
+      color:rgba(226,232,240,.85);
+      font-weight:750;
+      font-size:12px;
+      line-height:1.35;
+    }
+    .brand{
+      font-weight:900;
+      font-size:30px;
+      letter-spacing:-1px;
+    }
+    .brand span{color:var(--accent)}
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:6px;
+    }
+    .auth-body{padding:22px 22px 20px 22px}
+    .row{margin-bottom:14px}
+    .label{
+      display:block;
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      color:#475569;
+      margin-bottom:6px;
+    }
+    .input, .select{
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:2px solid var(--border);
+      font-size:14px;
+      outline:none;
+      transition:.2s;
+      background:#fff;
+    }
+    .input:focus, .select:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 4px rgba(59,130,246,.12);
+    }
+    .auth-actions{display:flex; gap:10px; margin-top:10px}
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.15s;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-size:14px;
+      user-select:none;
+    }
+    .btn-primary{background:var(--accent); color:#fff}
+    .btn-primary:hover{background:var(--accentHover); transform:translateY(-1px)}
+    .btn-ghost{background:#f1f5f9; color:var(--primary)}
+    .btn-ghost:hover{background:#e9eff7}
+    .btn-danger{background:var(--danger); color:#fff}
+    .btn-danger:hover{background:var(--dangerHover)}
+    .btn-full{width:100%}
+    .auth-foot{
+      padding:18px 30px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:#fff;
+    }
+    .link{
+      color:var(--accent);
+      font-weight:800;
+      cursor:pointer;
+      text-decoration:underline;
+    }
+    .banner{
+      display:none;
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:800;
+      font-size:13px;
+      background:#fee2e2;
+      color:#991b1b;
+      border:1px solid #fecaca;
+    }
+
+    /* ========================= APP SHELL ========================= */
+    #app-shell{
+      height:100vh;
+      display:none;
+      overflow:hidden;
+    }
+    .shell{
+      height:100%;
+      display:flex;
+      overflow:hidden;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      width:var(--sidebar);
+      background:var(--primary);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      flex-shrink:0;
+      border-right:1px solid rgba(255,255,255,.07);
+    }
+    .side-brand{
+      height:var(--header);
+      display:flex;
+      align-items:center;
+      padding:0 22px;
+      font-size:18px;
+      font-weight:900;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .side-brand span{color:var(--accent)}
+    .nav{
+      padding:14px 0;
+      overflow:auto;
+      flex:1;
+    }
+    .nav a{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 18px;
+      margin:0 10px;
+      border-radius:12px;
+      cursor:pointer;
+      color:#94a3b8;
+      text-decoration:none;
+      font-weight:700;
+      transition:.15s;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      background:rgba(255,255,255,.06);
+      color:#fff;
+    }
+    .nav a.active{
+      background:rgba(59,130,246,.14);
+      color:#fff;
+      border-color:rgba(59,130,246,.35);
+    }
+    .nav .danger-link{
+      color:#fecaca;
+      font-weight:900;
+    }
+
+    .side-foot{
+      padding:16px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .who{
+      font-size:12px;
+      color:#94a3b8;
+      margin-bottom:10px;
+      line-height:1.4;
+    }
+
+    /* Main */
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      background:var(--bg);
+    }
+    .topbar{
+      height:var(--header);
+      background:#fff;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 26px;
+      flex-shrink:0;
+    }
+    .title h2{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-0.5px;
+    }
+    .title p{color:var(--muted); font-size:12px; margin-top:4px}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:11px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      border:1px solid var(--border);
+      background:#f8fafc;
+      color:var(--primary);
+      gap:8px;
+      white-space:nowrap;
+    }
+
+    .content{
+      flex:1;
+      overflow:auto;
+      padding:26px;
+    }
+
+    /* Cards / Grids */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .stat{
+      background:#fff;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .stat::before{
+      content:"";
+      position:absolute; left:0; top:0; bottom:0;
+      width:4px; background:var(--accent);
+    }
+    .stat .v{font-size:30px; font-weight:900; line-height:1.1}
+    .stat .l{font-size:11px; font-weight:900; color:var(--muted); text-transform:uppercase; letter-spacing:.6px; margin-top:4px}
+
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+    .card-head{
+      padding:16px 18px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:#fff;
+    }
+    .card-head .h{
+      font-weight:900;
+      font-size:15px;
+    }
+    .card-body{padding:18px}
+
+    .tools{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .tools .input{
+      padding:10px 12px;
+      border-width:2px;
+      border-radius:10px;
+      width:260px;
+      max-width:100%;
+    }
+    .btn-sm{padding:8px 10px; border-radius:9px; font-size:12px}
+
+    /* Tables */
+    .table-wrap{width:100%; overflow:auto}
+    table{width:100%; border-collapse:collapse; min-width:980px}
+    th{
+      background:#f8fafc;
+      border-bottom:2px solid var(--border);
+      padding:12px 16px;
+      text-align:left;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    td{
+      padding:12px 16px;
+      border-bottom:1px solid #eef2f7;
+      vertical-align:middle;
+      font-size:14px;
+    }
+    tr:hover td{background:#fbfdff}
+
+    .tier-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:5px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      border:1px solid var(--border);
+      white-space:nowrap;
+    }
+    .t1{background:#f1f5f9; color:#334155}
+    .t2{background:#e0f2fe; color:#075985; border-color:#bae6fd}
+    .t3{background:#fef3c7; color:#92400e; border-color:#fde68a}
+    .t4{background:#ffedd5; color:#9a3412; border-color:#fed7aa}
+    .t5{background:#fee2e2; color:#991b1b; border-color:#fecaca}
+    .t6{background:#0b1220; color:#fff; border-color:#000}
+
+    .muted{color:var(--muted)}
+    .mono{font-family:var(--mono)}
+    .sep{height:1px; background:var(--border); margin:14px 0}
+
+    /* ========================= MODALS ========================= */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:99999;
+    }
+    .modal.show{display:flex}
+    .modal .backdrop{
+      position:absolute; inset:0;
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(2px);
+    }
+    .modal .panel{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:720px;
+      background:#fff;
+      border-radius:18px;
+      border:1px solid var(--border);
+      box-shadow:0 28px 80px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .panel-head{
+      padding:16px 18px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:linear-gradient(180deg,#fff,#f8fafc);
+    }
+    .panel-head .h{font-weight:900}
+    .panel-body{padding:18px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px}
+
+    /* Alerts */
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:min(460px, calc(100vw - 36px));
+      z-index:999999;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      pointer-events:none;
+    }
+    .toast .t{
+      pointer-events:auto;
+      background:#fff;
+      border:1px solid var(--border);
+      border-left:5px solid var(--accent);
+      border-radius:14px;
+      padding:12px 14px;
+      box-shadow:var(--shadow-md);
+    }
+    .toast .t strong{display:block; font-weight:900}
+    .toast .t p{font-size:13px; color:var(--muted); margin-top:4px; line-height:1.35}
+    .toast .t .mini{margin-top:8px; display:flex; gap:10px; align-items:center; justify-content:flex-end}
+
+    /* Mobile */
+    .mhead{
+      display:none;
+      position:fixed;
+      top:0; left:0; right:0;
+      height:60px;
+      background:var(--primary);
+      color:#fff;
+      z-index:3000;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 16px;
+      box-shadow:0 6px 18px rgba(0,0,0,.22);
+    }
+    .mhead .b{font-weight:900}
+    .toggle{
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+    }
+    .overlay{
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:2500;
+    }
+    .overlay.show{display:block}
+
+    @media (max-width: 980px){
+      .mhead{display:flex}
+      #app-shell{padding-top:60px}
+      .sidebar{
+        position:fixed;
+        left:0; top:0; bottom:0;
+        transform:translateX(-105%);
+        transition:.2s;
+        z-index:2600;
+      }
+      .sidebar.show{transform:translateX(0)}
+      .content{padding:16px}
+      .topbar{display:none}
+      table{min-width:860px}
+      .grid2,.grid3{grid-template-columns:1fr}
+      .tools .input{width:100%}
+    }
+  
+    /* ===== Nicer tables + student cell ===== */
+    .table-wrap table thead th{position:sticky; top:0; background:rgba(248,250,252,.96); backdrop-filter: blur(6px); z-index:2}
+    tbody tr{transition:transform .08s ease, box-shadow .12s ease, background .12s ease}
+    tbody tr:hover{background:#f8fafc}
+    .stu-cell{display:flex; gap:12px; align-items:center}
+    .avatar{
+      width:40px; height:40px;
+      border-radius:14px;
+      display:grid; place-items:center;
+      font-weight:1000;
+      color:#0b1220;
+      background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(16,185,129,.18));
+      border:1px solid rgba(148,163,184,.25);
+    }
+    .stu-name{font-weight:1000; line-height:1.1}
+    .stu-sub{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px}
+    .pill.pill-soft{background:#f1f5f9; border-color:#e2e8f0; color:#0f172a}
+    .pill.pill-pp{background:rgba(245,158,11,.14); border-color:rgba(245,158,11,.28); color:#92400e}
+    .pill.pill-sen{background:rgba(59,130,246,.14); border-color:rgba(59,130,246,.28); color:#1d4ed8}
+
+
+    body{ overflow-x:hidden; }
+    .main{ min-width:0; }
+    .tools > .input, .tools > .select{ max-width:100% !important; flex: 1 1 220px; }
+    .tools > .btn{ flex: 0 0 auto; }
+    @media(max-width:980px){
+      .tools > .input, .tools > .select{ flex: 1 1 100%; }
+      .tools > .btn{ width:100%; justify-content:center; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================= AUTH ========================= -->
+  <div id="auth-portal">
+    <div class="auth-card">
+      <div class="auth-top">
+        <div class="brand">Edu<span>Track</span> MIS</div>
+        <div class="sub">V1.0 – Final Edition · Enterprise Behaviour & Safeguarding MIS</div>
+      </div>
+
+      <div class="auth-body">
+
+        <!-- LOGIN -->
+        <div id="auth-login">
+          <div class="row">
+            <label class="label">Username</label>
+            <input id="login-user" class="input" type="text" placeholder="e.g. j.smith" />
+          </div>
+          <div class="row">
+            <label class="label">Password</label>
+            <input id="login-pass" class="input" type="password" placeholder="••••••••" />
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-primary btn-full" onclick="Auth.login()">Secure Login</button>
+          </div>
+        </div>
+
+        <!-- REGISTER -->
+        <div id="auth-register" style="display:none;">
+          <div class="row">
+            <label class="label">New Username</label>
+            <input id="reg-user" class="input" type="text" placeholder="e.g. a.jones" />
+          </div>
+          <div class="row">
+            <label class="label">Set Password</label>
+            <input id="reg-pass" class="input" type="password" placeholder="Min 6 characters" />
+          </div>
+          <div class="row">
+            <label class="label">Role</label>
+            <select id="reg-role" class="select">
+              <option value="Teacher">Teacher</option>
+              <option value="HOD">HOD</option>
+              <option value="HOY">HOY</option>
+              <option value="Assistant Head">Assistant Head</option>
+              <option value="SLT">SLT</option>
+              <option value="Deputy Head">Deputy Head</option>
+              <option value="Headteacher">Headteacher</option>
+            </select>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-primary btn-full" onclick="Auth.register()">Register & Login</button>
+          </div>
+        </div>
+
+        <div id="auth-banner" class="banner"></div>
+      </div>
+
+      <div class="auth-foot">
+        <div class="muted">School Network Mode · Local Storage</div>
+        <div>
+          <span id="auth-toggle-login" class="link" onclick="Auth.toggle('login')">Login</span>
+          <span class="muted"> · </span>
+          <span id="auth-toggle-register" class="link" onclick="Auth.toggle('register')">Create Account</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= APP ========================= -->
+  <div class="mhead">
+    <div class="b">EduTrack MIS</div>
+    <button class="toggle" onclick="UI.toggleSidebar()">☰</button>
+  </div>
+  <div class="overlay" id="overlay" onclick="UI.toggleSidebar()"></div>
+
+  <div id="app-shell">
+    <div class="shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="side-brand">ET <span>V1</span></div>
+
+        <nav class="nav">
+          <a class="active" id="nav-dashboard" onclick="Nav.go('dashboard')">📊 Dashboard</a>
+          <a id="nav-students" onclick="Nav.go('students')">🎓 Students</a>
+          <a id="nav-detentions" onclick="Nav.go('detentions')">⏳ Detentions</a>
+          <a id="nav-suspensions" onclick="Nav.go('suspensions')">🚫 Suspensions</a>
+          <a id="nav-oncall" onclick="Nav.go('oncall')">📣 SLT On Call</a>
+          <a id="nav-logging" onclick="Nav.go('logging')">📝 Log Incident</a>
+          <a id="nav-letters" onclick="Nav.go('letters')">✉️ Letter Gen</a>
+          <a id="nav-handbook" onclick="Nav.go('handbook')">📘 Handbook</a>
+
+          <div style="height:10px"></div>
+
+          <a id="nav-admin" class="danger-link" style="display:none" onclick="Nav.go('admin')">⚙️ Headteacher Controls</a>
+        </nav>
+
+        <div class="side-foot">
+          <div class="who" id="whoami">Not logged in</div>
+          <button class="btn btn-ghost btn-full" style="justify-content:flex-start; background:rgba(255,255,255,.06); color:#fff" onclick="Auth.logout()">
+            🔒 Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="title">
+            <h2 id="page-title">Dashboard</h2>
+            <p id="page-sub">Loading…</p>
+          </div>
+          <div class="pill" id="user-pill">Guest</div>
+        </div>
+
+        <div class="content">
+
+          <!-- ========================= DASHBOARD ========================= -->
+          <section id="view-dashboard">
+            <div class="grid">
+              <div class="stat"><div class="v" id="stat-roll">0</div><div class="l">Students On Roll</div></div>
+              <div class="stat"><div class="v" id="stat-dets">0</div><div class="l">Open Detentions</div></div>
+              <div class="stat"><div class="v" id="stat-neg">0</div><div class="l">Total Negatives</div></div>
+              <div class="stat"><div class="v" id="stat-pos">0</div><div class="l">Total Positives</div></div>
+              <div class="stat"><div class="v" id="stat-oncall">0</div><div class="l">Open On Call</div></div>
+            
+            <div class="grid" style="margin-top:14px;">
+              <div class="stat"><div class="v" id="stat-attavg">0.0</div><div class="l">Average Attendance %</div></div>
+              <div class="stat"><div class="v" id="stat-served">0</div><div class="l">Detentions Served</div></div>
+              <div class="stat"><div class="v" id="stat-noshow">0</div><div class="l">No Shows</div></div>
+              <div class="stat"><div class="v" id="stat-esc">0</div><div class="l">Escalations</div></div>
+            </div>
+
+            <div class="card" style="margin-top:14px;">
+              <div class="card-head">
+                <div class="h">Top Concern (Negatives)</div>
+                <div class="muted">Top 5 students by total negative points (MIS-style overview).</div>
+              </div>
+              <div class="card-body" id="dash-top5"></div>
+            </div>
+
+</div>
+
+
+
+<div class="card" style="margin-top:14px;">
+  <div class="card-head">
+    <div class="h">Activity Snapshot</div>
+    <div class="muted">Today + last 7 days (auto-updates)</div>
+  </div>
+  <div class="card-body">
+    <div class="grid" style="margin:0;">
+      <div class="stat"><div class="v" id="stat-today-dets">0</div><div class="l">Detentions Issued Today</div></div>
+      <div class="stat"><div class="v" id="stat-week-neg">0</div><div class="l">Negatives Logged (7d)</div></div>
+      <div class="stat"><div class="v" id="stat-week-pos">0</div><div class="l">Positives Logged (7d)</div></div>
+      <div class="stat"><div class="v" id="stat-week-oncall">0</div><div class="l">On Call Raised (7d)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="dash-slt" style="display:none;">
+  <div class="card-head">
+    <div class="h">SLT Overview</div>
+    <div class="tools">
+      <select id="slt-range" class="select" onchange="Dash.render()">
+        <option value="7">Last 7 days</option>
+        <option value="14">Last 14 days</option>
+        <option value="30">Last 30 days</option>
+      </select>
+    </div>
+  </div>
+  <div class="card-body" id="dash-slt-body" style="padding:16px;"></div>
+</div>
+
+            <div class="card">
+              <div class="card-head">
+                <div class="h">Live Student Register</div>
+                <div class="tools">
+                  <input id="dash-search" class="input" placeholder="Search by name, year, form…" onkeyup="Dash.render()" />
+                  <button class="btn btn-primary btn-sm" onclick="StudentUI.openAdd()">+ Add Student</button>
+                  <button class="btn btn-ghost btn-sm" onclick="StudentUI.exportCSV()">Export CSV</button>
+                  <button class="btn btn-ghost btn-sm" onclick="OnCallUI.open()">📣 SLT On Call</button>
+                  <button class="btn btn-ghost btn-sm" onclick="ManualDetUI.open()">⏳ Manual Detention</button>     </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Year</th>
+                      <th>Form</th>
+                      <th>Tier</th>
+                      <th>Negatives</th>
+                      <th>Open Dets</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= STUDENTS ========================= -->
+          <section id="view-students" style="display:none;">
+            <div class="card">
+              <div class="card-head">
+                <div class="h">Students</div>
+                <div class="tools">
+                  <input id="stu-search" class="input" placeholder="Search students…" onkeyup="StudentUI.renderList()" />
+                  <button class="btn btn-primary btn-sm" onclick="StudentUI.openAdd()">+ Add Student</button>
+                </div>
+              </div>
+
+              <div id="stu-bulk" class="tools" style="padding:0 16px 12px 16px; display:none; gap:10px; flex-wrap:wrap;">
+                <span class="pill" id="stu-selected-count">0 selected</span>
+                <button class="btn btn-primary btn-sm" onclick="BulkDetUI.openPicker()">🧾 Log detention for selected</button>
+                <button class="btn btn-danger btn-sm" data-perm="createStudents" onclick="StudentUI.bulkRemove()">🗑 Delete selected</button>
+                <button class="btn btn-ghost btn-sm" onclick="StudentUI.clearSelection()">Clear</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:42px;">
+                        <input id="stu-select-all" type="checkbox" onclick="StudentUI.toggleSelectAll(this.checked)" />
+                      </th>
+                      <th>Name</th>
+                      <th>Year</th>
+                      <th>Form</th>
+                      <th>Tier</th>
+                      <th>Neg</th>
+                      <th>Pos</th>
+                      <th>Attendance</th>
+                      <th>Flags</th>
+                      <th>Actions</th>
+</tr>
+                  </thead>
+                  <tbody id="stu-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Student Profile -->
+            <div class="card" id="profile-card" style="display:none;">
+              <div class="card-head">
+                <div class="h" id="prof-title">Student Profile</div>
+                <div class="tools">
+                  <button class="btn btn-ghost btn-sm" onclick="StudentUI.closeProfile()">← Back</button>
+                  <button class="btn btn-ghost btn-sm" onclick="OnCallUI.open(Store.activeStudentId)">📣 SLT On Call</button>
+                  <button class="btn btn-ghost btn-sm" onclick="ManualDetUI.open(Store.activeStudentId)">⏳ Manual Detention</button>
+                  <button class="btn btn-ghost btn-sm" data-perm="resetPoints" onclick="StudentUI.resetNegatives(Store.activeStudentId)">♻ Reset Negatives</button>
+
+                
+                  <button class="btn btn-danger btn-sm" data-perm="createStudents" onclick="StudentUI.remove(Store.activeStudentId)">🗑 Remove Student</button>
+</div>
+              </div>
+              <div class="card-body">
+                <div class="grid2">
+                  <div>
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Student Info</div>
+                    <div class="sep"></div>
+                    <div><strong>Name:</strong> <span id="prof-name"></span></div>
+                    <div><strong>Year/Form:</strong> <span id="prof-yearform"></span></div>
+                    <div><strong>Tier:</strong> <span id="prof-tier"></span></div>
+                    <div><strong>Negatives:</strong> <span id="prof-neg"></span></div>
+                    <div><strong>Positives:</strong> <span id="prof-pos"></span></div>
+                    <div><strong>Attendance:</strong> <span id="prof-att"></span>%</div>
+                    <div class="sep"></div>
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Notes (Editable)</div>
+                    <textarea id="prof-notes" class="input" style="height:120px; resize:vertical" onblur="StudentUI.saveNotes()"></textarea>
+                  </div>
+
+                  <div>
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Actions</div>
+                    <div class="sep"></div>
+
+                    <div class="grid3">
+                      <button class="btn btn-primary btn-sm" onclick="LogUI.quickOpen(Store.activeStudentId,'negative')">➖ Log Negative</button>
+                      <button class="btn btn-primary btn-sm" onclick="LogUI.quickOpen(Store.activeStudentId,'positive')">➕ Log Positive</button>
+                      <button class="btn btn-ghost btn-sm" onclick="LogUI.quickOpen(Store.activeStudentId,'suspension')">🚫 Suspension</button>
+                    </div>
+                    <div class="sep"></div>
+
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Quick Logs</div>
+                    <div class="muted" style="margin-top:6px;">Fast points logging (no automatic detentions). Choose a reason, then tap a button.</div>
+
+                    <div class="row" style="margin-top:10px;">
+                      <label class="label">Reason</label>
+                      <select id="ql-reason" class="select"></select>
+                    </div>
+
+                    <div class="grid2">
+                      <div class="card" style="margin:0;">
+                        <div class="card-head" style="padding:12px 14px;">
+                          <div class="h" style="font-size:13px;">Negatives</div>
+                          <span class="pill">Quick</span>
+                        </div>
+                        <div class="card-body" style="padding:12px 14px;">
+                          <div class="tools">
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('negative',1)">+1</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('negative',2)">+2</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('negative',3)">+3</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('negative',7)">+7</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('negative',10)">+10</button>
+                          </div>
+                          <div class="muted" style="font-size:12px; margin-top:10px;">Tip: Use +10 for Tier 6 points.</div>
+                        </div>
+                      </div>
+
+                      <div class="card" style="margin:0;">
+                        <div class="card-head" style="padding:12px 14px;">
+                          <div class="h" style="font-size:13px;">Positives</div>
+                          <span class="pill">Quick</span>
+                        </div>
+                        <div class="card-body" style="padding:12px 14px;">
+                          <div class="tools">
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('positive',1)">+1</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('positive',5)">+5</button>
+                            <button class="btn btn-ghost btn-sm" onclick="QuickLogUI.add('positive',10)">+10</button>
+                          </div>
+                          <div class="muted" style="font-size:12px; margin-top:10px;">For quick merits / achievement points.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:12px;">
+                      <label class="label">Optional note</label>
+                      <input id="ql-note" class="input" placeholder="Optional staff note…" />
+                    </div>
+                    <button class="btn btn-primary btn-full" onclick="QuickLogUI.save()">Save quick log</button>
+
+
+                    <div class="sep"></div>
+
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Parent Contact Log</div>
+                    <div class="muted" style="margin-top:6px;">Record calls/emails/SMS (MIS-style). Students cannot see this.</div>
+
+                    <div class="grid2" style="margin-top:10px;">
+                      <div class="row">
+                        <label class="label">Method</label>
+                        <select id="contact-method" class="select">
+                          <option>Phone call</option>
+                          <option>Email</option>
+                          <option>SMS</option>
+                          <option>Meeting</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="row">
+                        <label class="label">Outcome / Summary</label>
+                        <input id="contact-summary" class="input" placeholder="e.g. Left voicemail / parent acknowledged detention" />
+                      </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="StudentUI.addContact()">Add contact entry</button>
+
+                    <div class="sep"></div>
+                    <div id="prof-contacts" class="card" style="border:1px solid var(--border); box-shadow:none; padding:12px; margin-top:10px;"></div>
+
+                    <div class="muted" style="margin-top:10px; font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Quick points</div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+                      <button class="btn btn-ghost btn-sm" onclick="LogUI.quickAdd(Store.activeStudentId,'negative',5)">➖ +5</button>
+                      <button class="btn btn-ghost btn-sm" onclick="LogUI.quickAdd(Store.activeStudentId,'negative',10)">➖ +10</button>
+                      <button class="btn btn-ghost btn-sm" onclick="LogUI.quickAdd(Store.activeStudentId,'positive',5)">➕ +5</button>
+                      <button class="btn btn-ghost btn-sm" onclick="LogUI.quickAdd(Store.activeStudentId,'positive',10)">➕ +10</button>
+                    </div>
+
+                    <div class="sep"></div>
+
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Detentions (Student)</div>
+                    <div class="table-wrap" style="margin-top:10px">
+                      <table style="min-width:860px">
+                        <thead>
+                          <tr>
+                            <th><input type="checkbox" id="det-select-all" onclick="DetUI.toggleSelectAll(this.checked)" /></th><th>Date</th>
+                            <th>Tier</th>
+                            <th>Duration</th>
+                            <th>Authority</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Manage</th>
+                          </tr>
+                        </thead>
+                        <tbody id="prof-det-tbody"></tbody>
+                      </table>
+                    </div>
+
+                    <div class="sep"></div>
+
+                    <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Incident History</div>
+                    <div id="prof-hist" style="margin-top:10px; max-height:180px; overflow:auto; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+        
+         <!-- ========================= DETENTIONS ========================= -->
+          <section id="view-detentions" style="display:none;">
+            <div class="card">
+              <div class="card-head">
+                <div class="h">Detentions Register</div>
+                <div class="tools">
+                  <button class="btn btn-primary btn-sm" onclick="ManualDetUI.open()">⏳ Manual Detention</button>
+                  <button class="btn btn-ghost btn-sm" onclick="BulkDetUI.openFromStudents()">🧾 Bulk detention</button>
+
+                  <input id="det-search" class="input" placeholder="Search detentions…" onkeyup="DetUI.render()" />
+                  <select id="det-filter" class="select" style="padding:10px 12px; border-radius:10px; width:220px" onchange="DetUI.render()">
+                    <option value="all">All Status</option>
+                    <option value="Open">Open</option>
+                    <option value="Served">Served</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                  <input id="det-from" class="input" type="date" style="width:160px" onchange="DetUI.render()" />
+                  <input id="det-to" class="input" type="date" style="width:160px" onchange="DetUI.render()" />
+                  <select id="det-year" class="select" style="padding:10px 12px; border-radius:10px; width:170px" onchange="DetUI.render()">
+                    <option value="all">All Years</option>
+                    <option value="7">Year 7</option>
+                    <option value="8">Year 8</option>
+                    <option value="9">Year 9</option>
+                    <option value="10">Year 10</option>
+                    <option value="11">Year 11</option>
+                  </select>
+                  <button class="btn btn-ghost btn-sm" onclick="DetUI.exportCSV()">Export CSV</button>
+                  <button class="btn btn-ghost btn-sm" onclick="DetUI.printOpen()">Print Open</button>
+                </div>
+              </div>
+
+              <div id="det-bulk" class="tools" style="padding:0 16px 12px 16px; display:none; gap:10px; flex-wrap:wrap;">
+                <span class="pill" id="det-selected-count">0 selected</span>
+                <button class="btn btn-primary btn-sm" onclick="DetUI.bulkStatus('Served')">Tick Served</button>
+                <button class="btn btn-ghost btn-sm" onclick="DetUI.bulkMoveNextDay()">Move to next day</button>
+                <button class="btn btn-ghost btn-sm" onclick="DetUI.bulkNoShow()">Cross off (No show)</button>
+                <button class="btn btn-danger btn-sm" onclick="DetUI.bulkEscalate()">Escalate</button>
+                <button class="btn btn-ghost btn-sm" onclick="DetUI.clearSelection()">Clear</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:42px;">
+                        <input id="det-select-all" type="checkbox" onclick="DetUI.toggleSelectAll(this.checked)" />
+                      </th>
+                      <th>Date</th>
+                      <th>Student</th>
+                      <th>Year</th>
+                      <th>Form</th>
+                      <th>Tier</th>
+                      <th>Duration</th>
+                      <th>Reason</th>
+                      <th>Authority</th>
+                      <th>Status</th>
+                      <th>Manage</th>
+</tr>
+                  </thead>
+                  <tbody id="det-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= SUSPENSIONS ========================= -->
+          <section id="view-suspensions" style="display:none;">
+            <div class="card">
+              <div class="card-head">
+                <div class="h">Suspensions Register</div>
+                <div class="tools">
+                  <input id="susp-search" class="input" placeholder="Search suspensions…" onkeyup="SuspUI.render()" />
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Student</th>
+                      <th>Reason</th>
+                      <th>Days</th>
+                      <th>Return</th>
+                      <th>Status</th>
+                      <th>Manage</th>
+                    </tr>
+                  </thead>
+                  <tbody id="susp-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= ON CALL ========================= -->
+          <section id="view-oncall" style="display:none;">
+            <div class="card">
+              <div class="card-head">
+                <div class="h">SLT On Call Register</div>
+                <div class="tools">
+                  <button class="btn btn-primary btn-sm" onclick="OnCallUI.open()">📣 Create On Call</button>
+                  <input id="oncall-search" class="input" placeholder="Search on call…" onkeyup="OnCallUI.render()" />
+                </div>
+              </div>
+              <div class="card-body" style="padding:14px 18px;">
+                <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">
+                  On Call Staff:
+                  <span id="oncall-who" class="mono" style="margin-left:6px;">(not set)</span>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Student</th>
+                      <th>Year</th>
+                      <th>Form</th>
+                      <th>Room</th>
+                      <th>Type</th>
+                      <th>Raised By</th>
+                      <th>Status</th>
+                      <th>Manage</th>
+                    </tr>
+                  </thead>
+                  <tbody id="oncall-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= LOGGING ========================= -->
+          <section id="view-logging" style="display:none;">
+            <div class="card" style="max-width:1100px; margin:0 auto;">
+              <div class="card-head">
+                <div class="h">Log Incident</div>
+                <div class="tools">
+                  <button class="btn btn-ghost btn-sm" onclick="LogUI.reset()">Reset Form</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="grid2">
+                  <div>
+                    <div class="row">
+                      <label class="label">Student</label>
+                      <input id="log-student" class="input" list="student-list" placeholder="Type student name…" />
+                      <datalist id="student-list"></datalist>
+                    </div>
+
+                    <div class="row">
+                      <label class="label">Type</label>
+                      <select id="log-type" class="select" onchange="LogUI.onTypeChange()">
+                        <option value="negative">Behaviour (Negative)</option>
+                        <option value="positive">Achievement (Positive)</option>
+                        <option value="suspension">Suspension</option>
+                      </select>
+                    </div>
+
+                    <div class="row" id="log-amount-wrap">
+                      <label class="label">Points to add</label>
+                      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <select id="log-amount" class="select" style="width:180px" onchange="LogUI.onAmountChange()">
+                          <option value="1">+1</option>
+                          <option value="5">+5</option>
+                          <option value="10">+10</option>
+                          <option value="custom">Custom…</option>
+                        </select>
+                        <input id="log-amount-custom" class="input" type="number" min="1" step="1" value="1"
+                               style="width:140px; display:none;" oninput="LogUI.onAmountChange()" />
+                        <div class="muted" style="font-size:12px;">(Negatives & positives only)</div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <label class="label">Reason</label>
+                      <select id="log-reason" class="select"></select>
+                    </div>
+
+                    <div class="row" id="log-susp-days-wrap" style="display:none;">
+                      <label class="label">Suspension Days</label>
+                      <select id="log-susp-days" class="select">
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="row">
+                      <label class="label">Staff note</label>
+                      <textarea id="log-note" class="input" style="height:160px; resize:vertical" placeholder="Factual description…"></textarea>
+                    
+                    <div class="row">
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <input id="log-safe" type="checkbox" style="transform:scale(1.15);" />
+                        <label for="log-safe" style="font-weight:900;">Safeguarding flag (SLT/HT view only)</label>
+                      </div>
+                      <div class="muted" style="margin-top:6px;">Use for sensitive incidents. Students/teachers won’t see flagged details.</div>
+                    </div>
+
+                    <div class="row" id="log-conf-wrap" style="display:none;">
+                      <label class="label">Confidential note (SLT/HT only)</label>
+                      <textarea id="log-conf" class="input" style="height:110px; resize:vertical" placeholder="Confidential details…"></textarea>
+                    </div>
+</div>
+
+                    <div class="row">
+                      <label class="label">Preview consequence</label>
+                      <div class="card" style="margin:0">
+                        <div class="card-body" style="padding:12px 14px">
+                          <div id="log-preview" class="muted">Select details to preview…</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-full" onclick="LogUI.submit()">Submit Record</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= LETTERS ========================= -->
+          <section id="view-letters" style="display:none;">
+            <div class="card" style="max-width:1100px; margin:0 auto;">
+              <div class="card-head">
+                <div class="h">Letter Generator</div>
+              </div>
+              <div class="card-body">
+                <div class="grid2">
+                  <div>
+                    <div class="row">
+                      <label class="label">Student</label>
+                      <input id="letter-student" class="input" list="student-list" placeholder="Type student name…" />
+                    </div>
+                    <div class="row">
+                      <label class="label">Letter Type</label>
+                      <select id="letter-type" class="select">
+                        <option value="concern">General Behaviour Concern</option>
+                        <option value="detention">Detention Notice</option>
+                        <option value="suspension">Suspension Notice</option>
+                        <option value="tier6">Tier 6 Notice</option>
+                      </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="LettersUI.generate()">Generate Draft</button>
+                  </div>
+
+                  <div>
+                    <div class="row">
+                      <label class="label">Output</label>
+                      <div id="letter-out" class="mono" style="white-space:pre-wrap; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px; min-height:220px;">
+                        (No letter generated yet)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= HANDBOOK ========================= -->
+          <section id="view-handbook" style="display:none;">
+            <div class="card">
+              <div class="card-head">
+                <div class="h">Staff Handbook</div>
+              </div>
+              <div class="card-body" style="line-height:1.9;">
+                <h3 style="font-size:16px; font-weight:900; margin-bottom:10px;">Tier System (Negatives Threshold)</h3>
+                <ul style="margin-left:18px;">
+                  <li><strong>Tier 1:</strong> 0 negatives</li>
+                  <li><strong>Tier 2:</strong> 1 negative → 5 min HOD detention</li>
+                  <li><strong>Tier 3:</strong> 2 negatives → 20 min SLT detention</li>
+                  <li><strong>Tier 4:</strong> 3 negatives → 45 min SLT detention</li>
+                  <li><strong>Tier 5:</strong> 7 negatives → 75 min SLT detention</li>
+                  <li><strong>Tier 6:</strong> 10 negatives → 2 hour HT/DHT detention</li>
+                </ul>
+
+                <div class="sep"></div>
+
+                <h3 style="font-size:16px; font-weight:900; margin-bottom:10px;">SLT On Call (Lesson Use)</h3>
+                <p class="muted">
+                  Any staff member may trigger SLT On Call during lessons. You must select room and call type:
+                  Emergency / Medical / Removal. The system alerts who is on call.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================= ADMIN ========================= -->
+          <section id="view-admin" style="display:none;">
+            <div class="card" style="border:2px solid var(--danger);">
+              <div class="card-head" style="background:#fee2e2;">
+                <div class="h" style="color:#991b1b;">Headteacher Controls</div>
+              </div>
+              <div class="card-body">
+                <p class="muted" style="margin-bottom:14px;">
+                  These actions are irreversible and logged locally.
+                </p>
+                <div class="tools">
+                  <button class="btn btn-danger" onclick="Admin.clearLogins()">Clear All Logins</button>
+                  <button class="btn btn-danger" style="background:#0b1220" onclick="Admin.factoryReset()">Factory Reset</button>
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">On Call Rota (Set who is on call)</div>
+                <div class="grid2" style="margin-top:10px;">
+                  <div>
+                    <label class="label">Select On Call Staff (SLT / DHT / HT)</label>
+                    <select id="rota-select" class="select" multiple size="6" style="height:auto;"></select>
+                    <div class="muted" style="font-size:12px; margin-top:8px;">
+                      Hold Ctrl/Cmd to select multiple. These names appear in the On Call alert.
+                    </div>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary btn-full" onclick="Admin.saveRota()">Save On Call Rota</button>
+                    <div class="sep"></div>
+                    <div class="muted" style="font-size:12px;">
+                      Tip: Create SLT accounts first, then set rota here.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================= MODAL: ADD / EDIT STUDENT ========================= -->
+  <div class="modal" id="modal-student">
+    <div class="backdrop" onclick="StudentUI.closeAdd()"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="h" id="modal-student-title">Add Student</div>
+        <button class="btn btn-ghost btn-sm" onclick="StudentUI.closeAdd()">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="grid2">
+          <div class="row">
+            <label class="label">Full name</label>
+            <input id="ms-name" class="input" placeholder="e.g. John Smith" />
+          </div>
+          <div class="row">
+            <label class="label">Year</label>
+            <select id="ms-year" class="select"></select>
+          </div>
+          <div class="row">
+            <label class="label">Form</label>
+            <select id="ms-form" class="select"></select>
+          </div>
+          <div class="row">
+            <label class="label">Attendance %</label>
+            <input id="ms-att" class="input" type="number" min="0" max="100" step="0.1" />
+          </div>
+          <div class="row">
+            <label class="label">SEN</label>
+            <select id="ms-sen" class="select">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+          <div class="row">
+            <label class="label">PP</label>
+            <select id="ms-pp" class="select">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="label">Notes</label>
+          <textarea id="ms-notes" class="input" style="height:110px; resize:vertical"></textarea>
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn btn-primary btn-full" onclick="StudentUI.saveAdd()">Save Student</button>
+          <button class="btn btn-ghost btn-full" onclick="StudentUI.closeAdd()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= MODAL: SLT ON CALL ========================= -->
+  <div class="modal" id="modal-oncall">
+    <div class="backdrop" onclick="OnCallUI.close()"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="h">📣 SLT On Call</div>
+        <button class="btn btn-ghost btn-sm" onclick="OnCallUI.close()">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="grid2">
+          <div class="row">
+            <label class="label">Student</label>
+            <select id="oc-student" class="select"></select>
+          </div>
+          <div class="row">
+            <label class="label">Room / Location</label>
+            <input id="oc-room" class="input" placeholder="e.g. B12, Sports Hall" />
+          </div>
+          <div class="row">
+            <label class="label">Type</label>
+            <select id="oc-type" class="select">
+              <option value="Emergency">Emergency</option>
+              <option value="Medical">Medical</option>
+              <option value="Removal">Removal</option>
+            </select>
+          </div>
+          <div class="row">
+            <label class="label">On Call Staff (Alert)</label>
+            <div class="card" style="margin:0;">
+              <div class="card-body" style="padding:12px 14px;">
+                <div class="mono" id="oc-alert-who">(not set)</div>
+                <div class="muted" style="font-size:12px; margin-top:6px;">
+                  This is who will be alerted in the system log.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn btn-primary btn-full" onclick="OnCallUI.submit()">Send On Call Alert</button>
+          <button class="btn btn-ghost btn-full" onclick="OnCallUI.close()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- ========================= MODAL: MANUAL DETENTION ========================= -->
+<div class="modal" id="modal-manual-det">
+  <div class="backdrop" onclick="ManualDetUI.close()"></div>
+  <div class="panel">
+    <div class="panel-head">
+      <div class="h">⏳ Issue Manual Detention</div>
+      <button class="btn btn-ghost btn-sm" onclick="ManualDetUI.close()">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="grid2">
+        <div class="row">
+          <label class="label">Student</label>
+          <select id="md-student" class="select"></select>
+        </div>
+
+        <div class="row">
+          <label class="label">Detention Level</label>
+          <select id="md-tier" class="select">
+            <option value="2">Tier 2 – 5 min (HOD)</option>
+            <option value="3">Tier 3 – 20 min (SLT)</option>
+            <option value="4">Tier 4 – 45 min (SLT)</option>
+            <option value="5">Tier 5 – 75 min (SLT)</option>
+            <option value="6">Tier 6 – 120 min (HT/DHT)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid2">
+      <div class="row">
+        <label class="label">Main reason</label>
+        <select id="md-main-reason" class="select"></select>
+      </div>
+      <div class="row">
+        <label class="label">Staff details (optional)</label>
+        <input id="md-reason" class="input" placeholder="Optional details / context…" />
+      </div>
+    </div>
+
+      <div class="row">
+        <label class="label">Preview</label>
+        <div class="card" style="margin:0;">
+          <div class="card-body" style="padding:12px 14px;">
+            <div id="md-preview" class="muted">Select a student and tier…</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <button class="btn btn-primary btn-full" onclick="ManualDetUI.submit()">Issue Detention</button>
+        <button class="btn btn-ghost btn-full" onclick="ManualDetUI.close()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- ========================= MODAL: BULK DETENTION ========================= -->
+  <div class="modal" id="modal-bulk-det">
+    <div class="backdrop" onclick="BulkDetUI.close()"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="h">🧾 Bulk Detention</div>
+        <button class="btn btn-ghost btn-sm" onclick="BulkDetUI.close()">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="muted" style="margin-bottom:10px;">
+          Issuing detention to <strong><span id="bd-count">0</span></strong> selected student(s).
+        </div>
+
+        <div id="bd-picker" class="card" style="margin:0 0 12px 0; display:none;">
+          <div class="card-head" style="padding:12px 14px;">
+            <div>
+              <div class="h" style="font-size:14px;">Select students</div>
+              <div class="muted">Tick multiple students, then issue one detention to all.</div>
+            </div>
+            <div class="tools">
+              <input id="bd-search" class="input" placeholder="Search…" onkeyup="BulkDetUI.renderPicker()" />
+              <button class="btn btn-ghost btn-sm" onclick="BulkDetUI.pickAll(true)">All</button>
+              <button class="btn btn-ghost btn-sm" onclick="BulkDetUI.pickAll(false)">None</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding:12px 14px; max-height:220px; overflow:auto;">
+            <div id="bd-picker-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+          </div>
+        </div>
+
+
+        <div class="grid2">
+          <div class="row">
+            <label class="label">Detention Level</label>
+            <select id="bd-tier" class="select">
+              <option value="2">Tier 2 – 5 min (HOD)</option>
+              <option value="3">Tier 3 – 20 min (SLT)</option>
+              <option value="4">Tier 4 – 45 min (SLT)</option>
+              <option value="5">Tier 5 – 75 min (SLT)</option>
+              <option value="6">Tier 6 – 120 min (HT/DHT)</option>
+            </select>
+          </div>
+          <div class="row">
+            <label class="label">Date</label>
+            <input id="bd-date" class="input" type="date" />
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="row">
+            <label class="label">Main reason</label>
+            <select id="bd-main-reason" class="select"></select>
+          </div>
+          <div class="row">
+            <label class="label">Staff details (optional)</label>
+            <input id="bd-detail" class="input" placeholder="Optional details / context…" />
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="label">Preview</label>
+          <div class="card" style="margin:0;">
+            <div class="card-body" style="padding:12px 14px;">
+              <div id="bd-preview" class="muted">Choose tier/reason…</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn btn-primary btn-full" onclick="BulkDetUI.submit()">Issue Bulk Detention</button>
+          <button class="btn btn-ghost btn-full" onclick="BulkDetUI.close()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast area -->
+  <div class="toast" id="toast"></div>
+
+
+<script>
+/* ============================================================
+   EDUTRACK MIS V1.0 – FINAL ENGINE
+   PART 2/4: Core Store + Auth + Roles + Seed + Boot
+   ============================================================ */
+
+/* ========================= CONSTANTS ========================= */
+const DB = {
+  KEY: "edutrack_mis_v1_final",
+  VERSION: 1
+};
+
+const YEARS = [7,8,9,10,11];
+const FORMS = ["A","B","C","D"];
+
+
+// Detention reason bank (used for manual + bulk detentions). Keep user reasons + expand to realistic 100+ options.
+const DETENTION_REASON_BANK =   [
+    "Disruptive in lesson",
+    "Eating in lesson",
+    "Anti social actions",
+    "Damage to property",
+    "Arguing",
+    "Defiance",
+    "Rude speech towards a teacher",
+    "Rude speech towards a student",
+    "Disrespectful Actions (non-verbal)",
+    "Late to lesson",
+    "Late to school",
+    "Sexually abusive comments towards a student",
+    "Phone confiscation",
+    "Truanting",
+    "Uniform issue",
+    "Incorrect uniform",
+    "Refusal to remove coat/hood",
+    "No tie / incorrect tie",
+    "Incorrect footwear",
+    "Jewellery breach",
+    "Makeup/nails breach",
+    "No planner",
+    "No equipment",
+    "No pen/pencil",
+    "No book",
+    "No PE kit",
+    "Homework not completed",
+    "Homework incomplete",
+    "Repeated homework issues",
+    "Poor engagement",
+    "Lack of effort",
+    "Off-task behaviour",
+    "Calling out",
+    "Talking over teacher",
+    "Using phone in lesson",
+    "Using headphones",
+    "Refusal to hand phone over",
+    "Chewing gum",
+    "Eating/drinking (not allowed)",
+    "Littering",
+    "Running in corridors",
+    "Unsafe behaviour",
+    "Throwing objects",
+    "Rough play",
+    "Pushing/shoving",
+    "Fighting",
+    "Physical assault towards a student",
+    "Physical assault towards a teacher",
+    "Threatening behaviour",
+    "Verbal abuse",
+    "Swearing",
+    "Inappropriate language",
+    "Inappropriate gesture",
+    "Inappropriate comment",
+    "Bullying",
+    "Cyberbullying",
+    "Harassment",
+    "Sexual harassment",
+    "Racist behaviour",
+    "Homophobic behaviour",
+    "Transphobic behaviour",
+    "Discriminatory language",
+    "Discriminatory behaviour",
+    "Hate incident",
+    "Vaping",
+    "Smoking",
+    "Possession of cigarettes/vape",
+    "Possession of alcohol",
+    "Possession of age restricted items",
+    "Possession of illegal substances",
+    "Suspected substance use",
+    "Stealing",
+    "Theft",
+    "Attempted theft",
+    "Graffiti",
+    "Vandalism",
+    "Damage to school property",
+    "Damage to another student's property",
+    "Refusal to follow instructions",
+    "Refusal to move seat",
+    "Refusal to leave room",
+    "Walking out of lesson",
+    "Truanting (outside of school)",
+    "Out of bounds",
+    "Leaving site without permission",
+    "Late to detention",
+    "Didn't go to detention",
+    "Failure to attend intervention",
+    "Poor punctuality",
+    "Poor attendance (lesson)",
+    "Unexplained absence",
+    "Unauthorized absence",
+    "Internal truancy",
+    "Disruptive in corridor",
+    "Disruptive at break/lunch",
+    "Disruptive in assembly",
+    "Disruption during exam/assessment",
+    "Exam malpractice",
+    "Cheating",
+    "Plagiarism",
+    "Misuse of AI tools",
+    "Misuse of school computer",
+    "Inappropriate web use",
+    "Damage to ICT equipment",
+    "Attempted login / hacking",
+    "Sharing passwords",
+    "Filming staff/students",
+    "Taking photos without permission",
+    "Refusal to remove footage",
+    "Inappropriate social media use",
+    "Online bullying/abuse",
+    "Unsafe online behaviour",
+    "Failure to complete classwork",
+    "Poor quality classwork",
+    "Incomplete work",
+    "Lack of revision",
+    "Poor attitude to learning",
+    "Failure to bring correct kit",
+    "Forgotten PE kit",
+    "Unsafe PE behaviour",
+    "Misuse of sports equipment",
+    "Misuse of science equipment",
+    "Unsafe practical behaviour",
+    "Food fight",
+    "Queue jumping",
+    "Refusal to line up",
+    "Disruptive on school transport",
+    "Bus behaviour incident",
+    "Late return from break",
+    "Late return from lunch",
+    "Not following corridor system",
+    "Loitering in toilets",
+    "Toilet vandalism",
+    "Misuse of toilets",
+    "Spitting",
+    "Throwing food",
+    "Making false allegations",
+    "Inappropriate behaviour towards visitors",
+    "Refusal to cooperate with staff",
+    "Rude behaviour",
+    "Disrespectful behaviour",
+    "Backchat",
+    "Persistent disruption",
+    "Persistent defiance",
+    "Persistent poor engagement",
+    "Failure to wear lanyard/ID",
+    "Lost/forgot ID badge",
+    "Refusal to sign in/out",
+    "Breach of safety rules",
+    "Playground conflict",
+    "Social conflict",
+    "Peer intimidation",
+    "Inciting others",
+    "Gang-related behaviour",
+    "Possession of prohibited item",
+    "Possession of sharp object",
+    "Possession of fireworks",
+    "Setting off fire alarm",
+    "Tampering with safety equipment",
+    "Leaving class without permission",
+    "Wandering school",
+    "Not in correct lesson",
+    "Unkind behaviour",
+    "Teasing",
+    "Name calling",
+    "Spreading rumours",
+    "Inappropriate touching",
+    "Disruption during cover lesson",
+    "Disruption during supply",
+    "Not following cover work",
+    "Refusal to hand in confiscated item",
+    "Refusal to show planner",
+    "Refusal to show work",
+    "Misuse of language around safeguarding",
+    "Racist graffiti",
+    "Homophobic graffiti",
+    "Sexist comments",
+    "Misogynistic comments",
+    "Disruption on trip/visit",
+    "Unsafe behaviour on trip",
+    "Failure to follow instructions on trip",
+    "Refusal to complete sanction",
+    "Non-compliance with school rules",
+    "Breaking classroom rules",
+    "Leaving litter in classroom",
+    "Not meeting behaviour expectations",
+    "Poor conduct"
+  ];
+
+// Helper: populate a <select> with detention reasons
+function fillDetentionReasonSelect(sel, includePlaceholder=true){
+  if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = "";
+  if(includePlaceholder){
+    const ph = document.createElement("option");
+    ph.value = "";
+    ph.disabled = true;
+    ph.selected = true;
+    ph.textContent = "-- Select main reason --";
+    sel.appendChild(ph);
+  }
+  for(const r of DETENTION_REASON_BANK){
+    const o = document.createElement("option");
+    o.value = r;
+    o.textContent = r;
+    sel.appendChild(o);
+  }
+  if(cur && DETENTION_REASON_BANK.includes(cur)) sel.value = cur;
+}
+
+/* Roles (final list) */
+const ROLE = {
+  TEACHER: "Teacher",
+  HOD: "HOD",
+  HOY: "HOY",
+  AH: "Assistant Head",
+  SLT: "SLT",
+  DHT: "Deputy Head",
+  HT: "Headteacher",
+  STUDENT: "Student"
+};
+
+/* Permissions (behaviour-based MIS) */
+const PERMS = {
+  // issueManualDet = can LOG/ISSUE a manual detention (all staff, not students)
+  // manageDets     = can mark detentions Served/Cancelled (HOD+)
+  // deleteDets     = can delete detentions (HOY/SLT+)
+  // createStudents = can create student accounts/records (SLT/DHT/HT only)
+  [ROLE.TEACHER]:     { editStudents:false, manageDets:false, deleteDets:false, closeOnCall:false, admin:false, createStudents:false, issueManualDet:true , resetPoints:false},
+  [ROLE.HOD]:         { editStudents:true,  manageDets:true,  deleteDets:false, closeOnCall:false, admin:false, createStudents:false, issueManualDet:true , resetPoints:false},
+  [ROLE.HOY]:         { editStudents:true,  manageDets:true,  deleteDets:true,  closeOnCall:false, admin:false, createStudents:false, issueManualDet:true , resetPoints:false},
+  [ROLE.AH]:          { editStudents:true,  manageDets:true,  deleteDets:false, closeOnCall:true,  admin:false, createStudents:false, issueManualDet:true , resetPoints:false},
+  [ROLE.SLT]:         { editStudents:true,  manageDets:true,  deleteDets:true,  closeOnCall:true,  admin:false, createStudents:true,  issueManualDet:true , resetPoints:true},
+  [ROLE.DHT]:         { editStudents:true,  manageDets:true,  deleteDets:true,  closeOnCall:true,  admin:false, createStudents:true,  issueManualDet:true , resetPoints:true},
+  [ROLE.HT]:          { editStudents:true,  manageDets:true,  deleteDets:true,  closeOnCall:true,  admin:true,  createStudents:true,  issueManualDet:true , resetPoints:true},
+  [ROLE.STUDENT]:     { editStudents:false, manageDets:false, deleteDets:false, closeOnCall:false, admin:false, createStudents:false, issueManualDet:false , resetPoints:false}
+};
+
+function normalizeRole(r){
+  const s = Util.lower(Util.norm(r));
+  if(s === "deputy head" || s === "deputy headteacher" || s === "deputy" || s === "dht") return ROLE.DHT;
+  if(s === "headteacher" || s === "head teacher" || s === "ht") return ROLE.HT;
+  if(s === "assistant head" || s === "assistant headteacher" || s === "ah") return ROLE.AH;
+  if(s === "head of year" || s === "hoy") return ROLE.HOY;
+  if(s === "head of department" || s === "hod") return ROLE.HOD;
+  if(s === "teacher" || s === "staff") return ROLE.TEACHER;
+  if(s === "slt") return ROLE.SLT;
+  if(s === "student" || s === "pupil") return ROLE.STUDENT;
+  return r;
+}
+
+function can(permKey){
+  const r = normalizeRole(Store.session?.role || ROLE.TEACHER);
+  return !!PERMS[r]?.[permKey];
+}
+
+
+function currentStudentId(){
+  const role = normalizeRole(Store.session?.role);
+  if(role !== ROLE.STUDENT) return null;
+  const uname = Store.session?.usernameLower;
+  if(!uname) return null;
+  const urec = Store.data?.users?.[uname];
+  if(urec && urec.studentId && Store.getStudent(urec.studentId)) return urec.studentId;
+  // fallback: student record has loginUser matching username
+  const studs = Object.values(Store.students());
+  const hit = studs.find(s => Util.lower(Util.norm(s.loginUser || "")) === uname);
+  return hit ? hit.id : null;
+}
+
+
+/* ========================= UTILITIES ========================= */
+const Util = {
+  uid: () => `${Date.now()}_${Math.random().toString(16).slice(2)}`,
+  todayISO: () => new Date().toISOString().split("T")[0],
+  nowTime: () => new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }),
+  todayLong: () => new Date().toLocaleDateString("en-GB",{ weekday:"long", year:"numeric", month:"long", day:"numeric" }),
+  clamp: (n,min,max)=>Math.max(min,Math.min(max,n)),
+  norm: s => (s||"").trim(),
+  lower: s => (s||"").trim().toLowerCase(),
+  escape: s => (s||"").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])),
+  toast: (title, msg) => UI.toast(title, msg),
+  initials: (name)=>{
+    const parts = (name||"").trim().split(/\s+/).filter(Boolean);
+    const a = parts[0] ? parts[0][0] : "";
+    const b = parts.length>1 ? parts[parts.length-1][0] : "";
+    return (a+b).toUpperCase() || "?";
+  }
+};
+
+window.Util = Util;
+
+/* ========================= AUDIT LOG ========================= */
+const Audit = {
+  ensure(){
+    if(!Store.data.audit) Store.data.audit = [];
+  },
+  log(action, data={}){
+    this.ensure();
+    Store.data.audit.push({
+      id: Util.uid(),
+      dateISO: Util.todayISO(),
+      timeText: Util.nowTime(),
+      action,
+      staff: Store.session?.usernameLower || "system",
+      role: normalizeRole(Store.session?.role || "system"),
+      data
+    });
+    // Keep recent history only (local storage friendly)
+    if(Store.data.audit.length > 5000){
+      Store.data.audit = Store.data.audit.slice(-5000);
+    }
+  }
+};
+window.Audit = Audit;
+
+/* ========================= DATA MODEL =========================
+Store.data = {
+  meta:{version},
+  users:{ usernameLower: { pass, role, createdISO } },
+  students:{ id: studentObj },
+  detentions:[ detObj ],
+  suspensions:[ suspObj ],
+  oncall:{ rota:[usernameLower], logs:[ onCallObj ] }
+}
+=============================================================== */
+const Store = {
+  data: null,
+  session: null,           // { usernameLower, role }
+  activeStudentId: null,
+
+  load(){
+    const raw = localStorage.getItem(DB.KEY);
+    if(raw){
+      try{
+        this.data = JSON.parse(raw);
+      } catch(e){
+        this.data = null;
+      }
+    }
+    if(!this.data || !this.data.meta){
+      this.data = this.fresh();
+      this.seed();
+      this.save();
+    } else {
+      // migrate if needed
+      if(!this.data.oncall) this.data.oncall = { rota:[], logs:[] };
+      if(!this.data.detentions) this.data.detentions = [];
+      if(!this.data.suspensions) this.data.suspensions = [];
+      if(!this.data.users) this.data.users = {};
+      if(!this.data.students) this.data.students = {};
+      // Repair: if an older/broken saved build left the student register empty,
+      // automatically reseed demo students so the system isn't blank.
+      if(Object.keys(this.data.students).length === 0){
+        this.seed();
+      }
+      if(!this.data.audit) this.data.audit = [];
+      if(!this.data.contacts) this.data.contacts = {};   // { studentId: [ {dateISO,method,summary,staff} ] }
+      if(!this.data.config) this.data.config = {};       // future admin config
+      if(!this.data.meta.version) this.data.meta.version = DB.VERSION;
+      this.save();
+    }
+
+    // Restore session if exists
+    const sraw = localStorage.getItem(DB.KEY + "_session");
+    if(sraw){
+      try{
+        const sess = JSON.parse(sraw);
+        if(sess?.u && this.data.users[sess.u]){
+          this.session = { usernameLower: sess.u, role: this.data.users[sess.u].role };
+        }
+      } catch(e){}
+    }
+  },
+
+  save(){
+    localStorage.setItem(DB.KEY, JSON.stringify(this.data));
+    if(this.session){
+      localStorage.setItem(DB.KEY + "_session", JSON.stringify({ u: this.session.usernameLower }));
+    } else {
+      localStorage.removeItem(DB.KEY + "_session");
+    }
+  },
+
+  fresh(){
+    return {
+      meta:{ version: DB.VERSION },
+      users:{},
+      students:{},
+      detentions:[],
+      suspensions:[],
+      oncall:{ rota:[], logs:[] }
+    };
+  },
+
+  seed(){
+    // Default admin seed for first run
+    // Username: admin | Password: 123 | Role: Headteacher (so you can configure system)
+    const admin = "admin";
+    if(!this.data.users[admin]){
+      this.data.users[admin] = { pass:"123", role: ROLE.HT, createdISO: Util.todayISO() };
+    }
+
+    // Seed students (MIS-ish variety)
+    const first = ["James","Olivia","Harry","Emily","Jack","Isla","George","Ava","Noah","Mia","Leo","Grace","Amelia","Freya","Charlie"];
+    const last  = ["Smith","Jones","Taylor","Brown","Williams","Wilson","Johnson","Davies","Evans","Thomas","Roberts","Walker","White","Hall"];
+    const used = new Set();
+
+    const mkName = () => {
+      let n;
+      do{
+        n = `${first[Math.floor(Math.random()*first.length)]} ${last[Math.floor(Math.random()*last.length)]}`;
+      } while(used.has(n));
+      used.add(n);
+      return n;
+    };
+
+    // 60 students across Y7–Y11, forms A–D
+    for(let i=0;i<60;i++){
+      const year = YEARS[Math.floor(Math.random()*YEARS.length)];
+      const formLetter = FORMS[Math.floor(Math.random()*FORMS.length)];
+      const form = `${year}${formLetter}`;
+      const name = mkName();
+      const id = Util.uid();
+      this.data.students[id] = {
+        id,
+        name,
+        year,
+        form,
+        attendance: (90 + Math.random()*10).toFixed(1),
+        sen: Math.random() < 0.12,
+        pp: Math.random() < 0.22,
+        pos: Math.floor(Math.random()*10),
+        neg: Math.floor(Math.random()*5),
+        notes: "Default student record.",
+        history: [] // incident log entries
+      };
+    }
+  },
+
+  // Helpers
+  users(){ return this.data.users; },
+  students(){ return this.data.students; },
+
+  getStudent(id){ return this.data.students[id] || null; },
+
+  findStudentByName(name){
+    const nm = Util.lower(name);
+    for(const s of Object.values(this.data.students)){
+      if(Util.lower(s.name) === nm) return s;
+    }
+    return null;
+  }
+};
+
+/* ========================= AUTH ========================= */
+const Auth = {
+  toggle(mode){
+    const login = document.getElementById("auth-login");
+    const reg = document.getElementById("auth-register");
+    const banner = document.getElementById("auth-banner");
+    if(banner){ banner.style.display="none"; banner.textContent=""; }
+    if(!login || !reg) return;
+    if(mode === "register"){
+      login.style.display = "none";
+      reg.style.display = "block";
+    }else{
+      reg.style.display = "none";
+      login.style.display = "block";
+    }
+  },
+
+  banner(msg){
+    const b = document.getElementById("auth-banner");
+    if(!b) return;
+    b.textContent = msg;
+    b.style.display = "block";
+  },
+
+  login(){
+    const u = Util.lower(document.getElementById("login-user")?.value || "");
+    const p = document.getElementById("login-pass")?.value || "";
+    if(!u || !p){
+      this.banner("Username and password are required.");
+      return;
+    }
+
+    const rec = Store.users()[u];
+    if(!rec || rec.pass !== p){
+      this.banner("Invalid username or password.");
+      return;
+    }
+
+    Store.session = { usernameLower: u, role: rec.role };
+    localStorage.setItem(DB.KEY + "_session", JSON.stringify({ u }));
+    App.enter();
+  },
+
+  logout(){
+    Store.session = null;
+    localStorage.removeItem(DB.KEY + "_session");
+    App.exit();
+  },
+
+  register(){
+    const u = Util.lower(document.getElementById("reg-user")?.value || "");
+    const p = document.getElementById("reg-pass")?.value || "";
+    const role = document.getElementById("reg-role")?.value || "";
+
+    if(!u || !p){
+      this.banner("Username and password are required.");
+      return;
+    }
+    if(p.length < 3){
+      this.banner("Password is too short.");
+      return;
+    }
+    if(!role){
+      this.banner("Select a role.");
+      return;
+    }
+    if(Store.users()[u]){
+      this.banner("That username already exists.");
+      return;
+    }
+
+    // Prevent creation of student accounts from public register screen
+    if(normalizeRole(role) === ROLE.STUDENT){
+      this.banner("Student accounts must be created by SLT / Deputy Head / Headteacher.");
+      return;
+    }
+
+    // Only one HT and one DHT account
+    const nr = normalizeRole(role);
+    if(nr === ROLE.HT || nr === ROLE.DHT){
+      for(const [uu, rr] of Object.entries(Store.users())){
+        if(normalizeRole(rr.role) === nr){
+          this.banner(`A ${nr === ROLE.HT ? "Headteacher" : "Deputy Head"} account already exists.`);
+          return;
+        }
+      }
+    }
+
+    Store.data.users[u] = { pass: p, role: nr, createdISO: Util.todayISO() };
+    Store.audit(`Created account: ${u} (${nr})`);
+    Store.save();
+
+    // Auto-login
+    Store.session = { usernameLower: u, role: nr };
+    localStorage.setItem(DB.KEY + "_session", JSON.stringify({ u }));
+    App.enter();
+    Util.toast("Account created", "You are now logged in.");
+  }
+};
+
+window.Auth = Auth;
+
+
+/* ========================= UI SHELL ========================= */
+const UI = {
+  setNavActive(view){
+    document.querySelectorAll(".nav a").forEach(a=>a.classList.remove("active"));
+    const el = document.getElementById("nav-"+view);
+    if(el) el.classList.add("active");
+  },
+
+  showView(view){
+    document.querySelectorAll("main .content section").forEach(s=>s.style.display="none");
+    const sec = document.getElementById("view-"+view);
+    if(sec) sec.style.display="block";
+  },
+
+  toggleSidebar(){
+    const sb = document.getElementById("sidebar");
+    const ov = document.getElementById("overlay");
+    sb.classList.toggle("show");
+    ov.classList.toggle("show");
+  },
+
+  toast(title, msg){
+    const wrap = document.getElementById("toast");
+    const el = document.createElement("div");
+    el.className = "t";
+    el.innerHTML = `<strong>${Util.escape(title)}</strong><p>${Util.escape(msg)}</p>
+      <div class="mini"><button class="btn btn-ghost btn-sm">Close</button></div>`;
+    el.querySelector("button").onclick = () => el.remove();
+    wrap.appendChild(el);
+    setTimeout(()=>{ if(el.isConnected) el.remove(); }, 6500);
+  }
+};
+
+/* ========================= NAV ========================= */
+const Nav = {
+  go(view){
+    // Student security: students can only access Dashboard + Detentions
+    const r0 = normalizeRole(Store.session?.role);
+    if(r0 === ROLE.STUDENT){
+      const allowed = new Set(["dashboard","detentions"]);
+      if(!allowed.has(view)) view = "detentions";
+    }
+
+    UI.setNavActive(view);
+    UI.showView(view);
+
+    // Titles
+    const titles = {
+      dashboard:["Dashboard","Live overview of roll, detentions, negatives & on call"],
+      students:["Students","Student registry & profiles"],
+      detentions:["Detentions","Central detention management"],
+      suspensions:["Suspensions","Suspension register"],
+      oncall:["SLT On Call","Lesson on-call log & rota"],
+      logging:["Log Incident","Record behaviour, achievement, suspension"],
+      letters:["Letter Gen","Generate parent communications"],
+      handbook:["Handbook","Policy & guidance"],
+      admin:["Headteacher Controls","System controls & rota"]
+    };
+
+    const [t,sub] = titles[view] || ["EduTrack MIS",""];
+    document.getElementById("page-title").textContent = t;
+    document.getElementById("page-sub").textContent = sub || Util.todayLong();
+
+    // Mobile auto-close sidebar
+    if(window.innerWidth < 980){
+      const sb = document.getElementById("sidebar");
+      if(sb.classList.contains("show")) UI.toggleSidebar();
+    }
+
+    // Refresh view-specific renderers
+    if(view==="dashboard" && window.Dash) Dash.render();
+    if(view==="students" && window.StudentUI) StudentUI.renderList();
+    if(view==="detentions" && window.DetUI) DetUI.render();
+    if(view==="suspensions" && window.SuspUI) SuspUI.render();
+    if(view==="oncall" && window.OnCallUI) OnCallUI.render();
+  }
+};
+
+window.Nav = Nav;
+
+/* ========================= APP BOOT ========================= */
+const App = {
+  enter(){
+    // Hide auth portal, show app shell
+    const auth = document.getElementById("auth-portal");
+    const shell = document.getElementById("app-shell");
+    if(auth) auth.style.display = "none";
+    if(shell) shell.style.display = "block";
+
+    this.refreshAuthUI();
+    Nav.go("dashboard");
+  },
+
+  exit(){
+    const auth = document.getElementById("auth-portal");
+    const shell = document.getElementById("app-shell");
+    if(shell) shell.style.display = "none";
+    if(auth) auth.style.display = "flex";
+
+    // Clear fields for safety
+    const lu = document.getElementById("login-user");
+    const lp = document.getElementById("login-pass");
+    if(lu) lu.value = "";
+    if(lp) lp.value = "";
+    Auth.toggle("login");
+  },
+
+  refreshAuthUI(){
+    const u = Store.session?.usernameLower || "guest";
+    const r = Store.session?.role || "Guest";
+    const who = document.getElementById("whoami");
+    if(who) who.textContent = `${u} (${r})`;
+
+    const pill = document.getElementById("user-pill");
+    if(pill) pill.textContent = r;
+
+    const adminBtn = document.getElementById("nav-admin");
+    if(adminBtn) adminBtn.style.display = can("admin") ? "block" : "none";
+  }
+};
+
+window.App = App;
+
+
+/* ========================= INIT ========================= */
+(function init(){
+  Store.load();
+
+  const ysel = document.getElementById("ms-year");
+  if(ysel){
+    ysel.innerHTML = "";
+    for(const y of YEARS){
+      const o=document.createElement("option");
+      o.value=String(y); o.textContent=`Year ${y}`;
+      ysel.appendChild(o);
+    }
+  }
+  const fsel = document.getElementById("ms-form");
+  if(fsel){
+    fsel.innerHTML = "";
+    for(const y of YEARS){
+      for(const fl of FORMS){
+        const form = `${y}${fl}`;
+        const o=document.createElement("option");
+        o.value=form; o.textContent=form;
+        fsel.appendChild(o);
+      }
+    }
+  }
+
+  fillDetentionReasonSelect(document.getElementById("md-main-reason"));
+  fillDetentionReasonSelect(document.getElementById("bd-main-reason"));
+
+  App.refreshAuthUI();
+
+  if(Store.session){
+    window.__AUTO_ENTER = true;
+  } else {
+    // Ensure auth portal is visible (default) and app shell hidden
+    const auth = document.getElementById("auth-portal");
+    const shell = document.getElementById("app-shell");
+    if(shell) shell.style.display = "none";
+    if(auth) auth.style.display = "flex";
+    Auth.toggle("login");
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   EDUTRACK MIS V1.0 – FINAL ENGINE
+   PART 3/4: Tier Engine + Students + Dash + Det + Susp + Logging
+   ============================================================ */
+
+/* ========================= TIER ENGINE =========================
+Tier thresholds requested:
+Tier 1 = 0 negatives
+Tier 2 = 1 negative (5 min HOD detention)
+Tier 3 = 2 negatives (20 min SLT detention)
+Tier 4 = 3 negatives (45 min SLT detention)
+Tier 5 = 7 negatives (75 min SLT detention)
+Tier 6 = 10 negatives (2 hour HT/DHT detention)
+=============================================================== */
+const Tier = {
+  thresholds: [
+    { tier: 1, neg: 0 },
+    { tier: 2, neg: 1 },
+    { tier: 3, neg: 2 },
+    { tier: 4, neg: 3 },
+    { tier: 5, neg: 7 },
+    { tier: 6, neg: 10 }
+  ],
+
+  detentionMap: {
+    2: { minutes: 5,   authority: "HOD" },
+    3: { minutes: 20,  authority: "SLT" },
+    4: { minutes: 45,  authority: "SLT" },
+    5: { minutes: 75,  authority: "SLT" },
+    6: { minutes: 120, authority: "HT/DHT" }
+  },
+
+  // Compute tier from negatives
+  calc(neg){
+    const n = Number(neg || 0);
+    if(n >= 10) return 6;
+    if(n >= 7)  return 5;
+    if(n >= 3)  return 4;
+    if(n >= 2)  return 3;
+    if(n >= 1)  return 2;
+    return 1;
+  },
+
+  badgeHTML(tier){
+    const t = Number(tier);
+    const cls = t===1?'t1':t===2?'t2':t===3?'t3':t===4?'t4':t===5?'t5':'t6';
+    return `<span class="tier-badge ${cls}">Tier ${t}</span>`;
+  }
+};
+
+window.Tier = Tier;
+
+/* ========================= DETENTION ENGINE ========================= */
+const DetentionEngine = {
+  // Create detention record
+  createForTier(studentId, tierNum, reason, issuedByUser, dateISOOverride){
+    const meta = Tier.detentionMap[tierNum];
+    if(!meta) return null; // no detention for tier 1
+    const s = Store.getStudent(studentId);
+    if(!s) return null;
+
+    const det = {
+      id: Util.uid(),
+      studentId,
+      studentName: s.name,
+      year: s.year,
+      form: s.form,
+
+      tier: tierNum,
+      minutes: meta.minutes,
+      authority: meta.authority,
+
+      dateISO: dateISOOverride || Util.todayISO(),
+      dateText: new Date((dateISOOverride || Util.todayISO()) + "T00:00:00").toLocaleDateString("en-GB"),
+      reason: reason || `Tier ${tierNum} threshold reached`,
+      status: "Open", // Open | Served | Cancelled
+      issuedBy: issuedByUser || (Store.session?.usernameLower || "system"),
+      issuedRole: Store.session?.role || "Unknown"
+    };
+
+    Store.data.detentions.push(det);
+    return det;
+  },
+
+  // Check crossing threshold (only when you cross into a new tier)
+  maybeIssueOnNegative(studentId, prevNeg, newNeg, reason){
+    // Automatic detentions disabled (manual/bulk only)
+    return;
+  },
+
+  // student detentions (all detentions by student id)
+  byStudent(studentId){
+    return Store.data.detentions.filter(d => d.studentId === studentId);
+  }
+};
+
+/* ========================= STUDENT UI ========================= */
+const StudentUI = {
+  selected: new Set(),
+  openAdd(){
+    if(!can("createStudents")) return Util.toast("Permission denied","Only Headteacher / SLT / Deputy Head can create student accounts.");
+    if(!can("editStudents")) return Util.toast("Permission denied","You do not have permission to add/edit students.");
+    this._mode = "add";
+    document.getElementById("modal-student-title").textContent = "Add Student";
+    document.getElementById("ms-name").value = "";
+    document.getElementById("ms-att").value  = "96.4";
+    document.getElementById("ms-sen").value  = "false";
+    document.getElementById("ms-pp").value   = "false";
+    document.getElementById("ms-notes").value= "";
+    // default year/form
+    document.getElementById("ms-year").value = "7";
+    document.getElementById("ms-form").value = "7A";
+    document.getElementById("modal-student").classList.add("show");
+  },
+
+  closeAdd(){
+    document.getElementById("modal-student").classList.remove("show");
+  },
+
+  saveAdd(){
+    if(!can("editStudents")) return Util.toast("Permission denied","You cannot save student changes.");
+    const name = Util.norm(document.getElementById("ms-name").value);
+    const year = Number(document.getElementById("ms-year").value);
+    const form = document.getElementById("ms-form").value;
+    const att  = Util.clamp(Number(document.getElementById("ms-att").value || 0),0,100).toFixed(1);
+    const sen  = document.getElementById("ms-sen").value === "true";
+    const pp   = document.getElementById("ms-pp").value === "true";
+    const notes= Util.norm(document.getElementById("ms-notes").value);
+
+    if(!name) return Util.toast("Missing data","Student name is required.");
+
+    // prevent duplicate exact name
+    const existing = Store.findStudentByName(name);
+    if(existing) return Util.toast("Duplicate student","A student with that name already exists.");
+
+    const id = Util.uid();
+    Store.data.students[id] = {
+      id,
+      name,
+      year,
+      form,
+      attendance: att,
+      sen, pp,
+      pos: 0,
+      neg: 0,
+      notes: notes || "",
+      history: []
+    };
+
+    Store.save();
+    App.populateStudentList();
+    App.populateStudentSelects();
+    this.closeAdd();
+    Util.toast("Student added", `${name} (${form}) enrolled.`);
+    Dash.render();
+    this.renderList();
+  },
+
+    renderList(){
+    const tb = document.getElementById("stu-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+
+    const term = Util.lower(Util.norm(document.getElementById("stu-search")?.value || ""));
+    let students = Object.values(Store.students()).sort((a,b)=>a.name.localeCompare(b.name));
+
+    // Student view: only show the logged-in student's own record
+    const role = normalizeRole(Store.session?.role);
+    if(role === ROLE.STUDENT){
+      const sid = currentStudentId();
+      const me = sid ? Store.getStudent(sid) : null;
+      students = me ? [me] : [];
+    }
+
+    for(const s of students){
+      const match =
+        !term ||
+        Util.lower(s.name).includes(term) ||
+        String(s.year||"").includes(term) ||
+        Util.lower(String(s.form||"")).includes(term);
+
+      if(!match) continue;
+
+      const tier = Tier.calc(Number(s.neg||0));
+      const flags = [
+        s.sen ? "SEN" : null,
+        s.pp ? "PP" : null
+      ].filter(Boolean).join(" · ") || "—";
+
+      const att = (s.attendance!=null ? Number(s.attendance) : 0);
+      const neg = Number(s.neg||0);
+      const pos = Number(s.pos||0);
+
+      const isStudent = (role === ROLE.STUDENT);
+
+      const actions = isStudent
+        ? `<span class="muted">View only</span>`
+        : `
+          <button class="btn btn-primary btn-sm" onclick="Nav.go('students'); StudentUI.openProfile('${s.id}')">Profile</button>
+          <button class="btn btn-ghost btn-sm" onclick="OnCallUI.open('${s.id}')">📣 On Call</button>
+          <button class="btn btn-danger btn-sm" data-perm="createStudents" onclick="StudentUI.remove('${s.id}')">🗑 Remove</button>
+        `;
+
+
+      const tr = document.createElement("tr");
+      tr.setAttribute("data-stu-id", s.id);
+      tr.innerHTML = `
+        <td data-label="Select">
+          <input type="checkbox" ${StudentUI.selected.has(s.id) ? "checked" : ""} ${isStudent ? "disabled" : ""} onchange="StudentUI.toggle('${s.id}', this.checked)" />
+        </td>
+        <td data-label="Name"><strong>${Util.escape(s.name)}</strong></td>
+        <td data-label="Year">Year ${Util.escape(String(s.year||""))}</td>
+        <td data-label="Form">${Util.escape(String(s.form||""))}</td>
+        <td data-label="Tier">${Tier.badgeHTML(tier)}</td>
+        <td data-label="Neg" class="mono"><strong>${neg}</strong></td>
+        <td data-label="Pos" class="mono"><strong>${pos}</strong></td>
+        <td data-label="Attendance" class="mono">${isFinite(att) ? att.toFixed(1) : "0.0"}%</td>
+        <td data-label="Flags">${Util.escape(flags)}</td>
+        <td data-label="Actions">${actions}</td>
+      `;
+      tb.appendChild(tr);
+    }
+    this.updateBulkBar();
+  },
+
+  exportCSV(){
+    if(!can("editStudents")) return Util.toast("Permission denied","You don't have access to export students.");
+    const rows = Object.values(Store.data.students||{}).map(s=>({
+      name: s.name||"",
+      year: s.year||"",
+      form: s.form||"",
+      tier: Tier.calc(Number(s.neg||0)),
+      negatives: Number(s.neg||0),
+      positives: Number(s.pos||0),
+      attendance: Number(s.attendance||0),
+      sen: s.sen ? "Yes":"No",
+      pp: s.pp ? "Yes":"No",
+      notes: (s.notes||"").replace(/\n/g," ")
+    }));
+    const header = ["Name","Year","Form","Tier","Negatives","Positives","Attendance","SEN","PP","Notes"];
+    const csv = [header.join(",")].concat(rows.map(r=>[
+      r.name,r.year,r.form,r.tier,r.negatives,r.positives,r.attendance,r.sen,r.pp,`"${String(r.notes).replace(/"/g,'""')}"`
+    ].join(","))).join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `edutrack_students_${Util.todayISO()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    Util.toast("Export started","Students CSV downloaded.");
+  },
+
+  toggle(id, checked){
+    if(checked) this.selected.add(id); else this.selected.delete(id);
+    this.updateBulkBar();
+  },
+
+  toggleSelectAll(checked){
+    const boxes = document.querySelectorAll("#stu-tbody input[type=checkbox]");
+    boxes.forEach(b=>{
+      b.checked = checked;
+      const tr = b.closest("tr");
+      // derive student id from button onclick snippet is hard; instead use dataset
+      const sid = tr?.getAttribute("data-stu-id");
+      if(!sid) return;
+      if(checked) this.selected.add(sid); else this.selected.delete(sid);
+    });
+    this.updateBulkBar();
+  },
+
+  clearSelection(){
+    this.selected.clear();
+    document.querySelectorAll("#stu-tbody input[type=checkbox]").forEach(b=>b.checked=false);
+    const all = document.getElementById("stu-select-all"); if(all) all.checked = false;
+    this.updateBulkBar();
+  },
+
+  updateBulkBar(){
+    const role = normalizeRole(Store.session?.role);
+    const bar = document.getElementById("stu-bulk");
+    if(role === ROLE.STUDENT){
+      if(bar) bar.style.display = "none";
+      return;
+    }
+    const cnt = this.selected.size;
+    const pill = document.getElementById("stu-selected-count");
+    if(pill) pill.textContent = `${cnt} selected`;
+    if(bar) bar.style.display = cnt>0 ? "flex" : "none";
+  },
+
+  bulkRemove(){
+    if(!can("createStudents")) return Util.toast("Permission denied","Only Headteacher / SLT / Deputy Head can delete students.");
+    const ids = [...this.selected];
+    if(ids.length===0) return;
+    if(!confirm(`Delete ${ids.length} student(s) permanently? This will also delete their detentions, on-call logs and suspensions.`)) return;
+
+    for(const id of ids){
+      // Remove without per-student confirm
+      const s = Store.getStudent(id);
+      if(!s) continue;
+
+      // delete student record
+      delete Store.data.students[id];
+
+      // delete related data
+      Store.data.detentions = (Store.data.detentions||[]).filter(d=>d.studentId !== id);
+      Store.data.suspensions = (Store.data.suspensions||[]).filter(sp=>sp.studentId !== id);
+      Store.data.oncall.logs = (Store.data.oncall.logs||[]).filter(l=>l.studentId !== id);
+
+      // unlink login if present
+      for(const [uname, urec] of Object.entries(Store.data.users||{})){
+        if(urec?.studentId === id){
+          delete Store.data.users[uname];
+        }
+      }
+
+      Audit.log("student_delete_bulk", { studentId:id, studentName:s.name });
+    }
+
+    Store.save();
+    this.clearSelection();
+    App.populateStudentList();
+    App.populateStudentSelects();
+    Dash.render();
+    this.renderList();
+    Util.toast("Deleted", `${ids.length} student(s) removed.`);
+  },
+
+
+  remove(studentId){
+    // Only Headteacher / SLT / Deputy Head can remove students
+    if(!can("createStudents")) return Util.toast("Permission denied","Only Headteacher / SLT / Deputy Head can remove students.");
+    const s = Store.getStudent(studentId);
+    if(!s) return;
+
+    const detCount = (Store.data.detentions||[]).filter(d=>d.studentId===studentId).length;
+    const suspCount = (Store.data.suspensions||[]).filter(x=>x.studentId===studentId).length;
+
+    const msg = `Remove ${s.name} permanently?
+
+This will delete:
+• Student record
+• ${detCount} detentions
+• ${suspCount} suspensions
+• Any linked student login`;
+    if(!confirm(msg)) return;
+
+    // Remove linked records
+    Store.data.detentions = (Store.data.detentions||[]).filter(d=>d.studentId!==studentId);
+    Store.data.suspensions = (Store.data.suspensions||[]).filter(x=>x.studentId!==studentId);
+    if(Store.data.oncall && Array.isArray(Store.data.oncall.logs)){
+      Store.data.oncall.logs = Store.data.oncall.logs.filter(x=>x.studentId!==studentId);
+    }
+
+    // Remove linked student login (if present)
+    const loginUser = Util.lower(Util.norm(s.loginUser || ""));
+    if(loginUser && Store.data.users && Store.data.users[loginUser] && normalizeRole(Store.data.users[loginUser].role) === ROLE.STUDENT){
+      delete Store.data.users[loginUser];
+    }
+
+    delete Store.data.students[studentId];
+    if(Store.activeStudentId === studentId) Store.activeStudentId = null;
+
+    Store.save();
+    App.populateStudentList();
+    App.populateStudentSelects();
+    Util.toast("Student removed", `${s.name} deleted.`);
+    Dash.render();
+    this.renderList();
+    this.closeProfile();
+  },
+
+  resetNegatives(studentId){
+    if(!can("resetPoints")) return Util.toast("Permission denied","Only SLT/DHT/Headteacher can reset negative points.");
+    const s = Store.getStudent(studentId);
+    if(!s) return;
+    const before = Number(s.neg||0);
+    if(!confirm(`Reset negatives for ${s.name}?\n\nThis will set negatives from ${before} to 0.`)) return;
+
+    s.neg = 0;
+    s.history = s.history || [];
+    const now = new Date();
+    s.history.push({
+      dateISO: Util.todayISO(),
+      dateText: now.toLocaleDateString("en-GB"),
+      timeText: now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}),
+      type: "admin",
+      reason: "Negatives reset",
+      note: `Reset from ${before} to 0`,
+      safeguarding: false,
+      confidential: "",
+      staff: Store.session?.usernameLower || "unknown",
+      role: Store.session?.role || "unknown"
+    });
+
+    Audit.log("reset_negatives", { studentId: s.id, studentName: s.name, from: before, to: 0 });
+    Store.save();
+
+    Util.toast("Negatives reset", `${s.name} · ${before} → 0`);
+    Dash.render();
+    StudentUI.renderList();
+    if(Store.activeStudentId===s.id){
+      StudentUI.openProfile(s.id);
+    }
+  },
+
+  openProfile(studentId){
+    const s = Store.getStudent(studentId);
+    if(!s) return;
+    Store.activeStudentId = studentId;
+
+    document.getElementById("profile-card").style.display = "block";
+    document.getElementById("prof-title").textContent = `Profile: ${s.name}`;
+    document.getElementById("prof-name").textContent = s.name;
+    document.getElementById("prof-yearform").textContent = `Year ${s.year} · ${s.form}`;
+
+    const tier = Tier.calc(s.neg);
+    document.getElementById("prof-tier").innerHTML = Tier.badgeHTML(tier);
+    document.getElementById("prof-neg").textContent = String(s.neg||0);
+    const pp = document.getElementById("prof-pos"); if(pp) pp.textContent = String(s.pos||0);
+    document.getElementById("prof-att").textContent = String(s.attendance||"0");
+    document.getElementById("prof-notes").value = s.notes || "";
+
+    this.renderProfileDetentions();
+    this.renderHistory();
+    this.renderContacts();
+    QuickLogUI.setup(studentId);
+
+    // Scroll to profile card
+    setTimeout(()=>{
+      document.getElementById("profile-card").scrollIntoView({ behavior:"smooth", block:"start" });
+    }, 50);
+  },
+
+  closeProfile(){
+    document.getElementById("profile-card").style.display = "none";
+    Store.activeStudentId = null;
+  },
+
+  saveNotes(){
+    if(!Store.activeStudentId) return;
+    if(!can("editStudents")) return;
+    const s = Store.getStudent(Store.activeStudentId);
+    if(!s) return;
+    s.notes = document.getElementById("prof-notes").value || "";
+    Store.save();
+  },
+
+  addContact(){
+    const sid = Store.activeStudentId;
+    if(!sid) return;
+    // Students cannot add contacts
+    if(normalizeRole(Store.session?.role) === ROLE.STUDENT) return Util.toast("Permission denied","Students cannot add contact logs.");
+    const summary = Util.norm(document.getElementById("contact-summary")?.value);
+    const method = document.getElementById("contact-method")?.value || "Other";
+    if(!summary) return Util.toast("Missing summary","Please add a short outcome/summary.");
+    Store.data.contacts = Store.data.contacts || {};
+    Store.data.contacts[sid] = Store.data.contacts[sid] || [];
+    const entry = { id: Util.uid(), dateISO: Util.todayISO(), timeText: Util.nowTime(), method, summary, staff: Store.session?.usernameLower || "unknown" };
+    Store.data.contacts[sid].push(entry);
+    Audit.log("parent_contact", { studentId:sid, method, summary });
+    Store.save();
+    const inp = document.getElementById("contact-summary"); if(inp) inp.value = "";
+    this.renderContacts();
+  },
+
+  renderContacts(){
+    const wrap = document.getElementById("prof-contacts");
+    const sid = Store.activeStudentId;
+    if(!wrap || !sid) return;
+    const role = normalizeRole(Store.session?.role);
+    if(role === ROLE.STUDENT){
+      wrap.innerHTML = `<div class="muted">Not available in student view.</div>`;
+      return;
+    }
+    const list = (Store.data.contacts?.[sid] || []).slice().reverse();
+    if(list.length===0){
+      wrap.innerHTML = `<div class="muted">No parent contact entries yet.</div>`;
+      return;
+    }
+    wrap.innerHTML = list.slice(0,25).map(e=>`
+      <div style="display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid var(--border);">
+        <div>
+          <div style="font-weight:900;">${Util.escape(e.method)}</div>
+          <div class="muted">${Util.escape(e.summary)}</div>
+        </div>
+        <div class="muted" style="text-align:right; white-space:nowrap;">
+          ${Util.escape(e.dateISO)}<br>${Util.escape(e.timeText||"")}
+        </div>
+      </div>
+    `).join("");
+  },
+
+
+  renderProfileDetentions(){
+    const tb = document.getElementById("prof-det-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+    const sid = Store.activeStudentId;
+    if(!sid) return;
+
+    const list = DetentionEngine.byStudent(sid)
+      .slice()
+      .sort((a,b)=> (a.dateISO||"").localeCompare(b.dateISO||""));
+
+    if(list.length === 0){
+      tb.innerHTML = `<tr><td colspan="7" class="muted">No detentions on record.</td></tr>`;
+      return;
+    }
+
+    for(const d of list){
+      const tierHTML = Tier.badgeHTML(d.tier);
+      const manageBtns = [];
+
+      // Mark served (HOD+ manageDets)
+      if(can("manageDets") && d.status === "Open"){
+        manageBtns.push(`<button class="btn btn-primary btn-sm" onclick="DetUI.setStatus('${d.id}','Served')">Served</button>`);
+        manageBtns.push(`<button class="btn btn-ghost btn-sm" onclick="DetUI.setStatus('${d.id}','Cancelled')">Cancel</button>`);
+      }
+
+      // Delete permission: SLT & HOY (and above) per your rule
+      if(can("deleteDets")){
+        manageBtns.push(`<button class="btn btn-danger btn-sm" onclick="DetUI.delete('${d.id}')">Delete</button>`);
+      }
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input type="checkbox" ${DetUI.selected.has(d.id) ? "checked" : ""} onclick="DetUI.toggle('${d.id}', this.checked)" /></td>
+        <td>${Util.escape(d.dateText || "")}</td>
+        <td>${tierHTML}</td>
+        <td class="mono">${d.minutes}m</td>
+        <td>${Util.escape(d.authority || "")}</td>
+        <td>${Util.escape(d.reason || "")}</td>
+        <td><span class="pill">${Util.escape(d.status || "")}</span></td>
+        <td>${manageBtns.join(" ") || "-"}</td>
+      `;
+      tb.appendChild(tr);
+    }
+    this.updateBulkBar();
+  },
+
+  renderHistory(){
+    const box = document.getElementById("prof-hist");
+    if(!box) return;
+    const sid = Store.activeStudentId;
+    if(!sid) return;
+    const s = Store.getStudent(sid);
+    if(!s) return;
+
+    const hist = (s.history || []).slice().reverse();
+    if(hist.length === 0){
+      box.innerHTML = `<div class="muted">No history logged yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = hist.map(h => {
+      const line = `<strong>${Util.escape(h.dateText || "")}</strong> · ${Util.escape(h.type || "")} · ${Util.escape(h.reason || "")}
+        <div class="muted" style="margin-top:4px;">${Util.escape(h.note || "")}</div>
+        <div class="sep"></div>`;
+      return `<div style="margin-bottom:10px;">${line}</div>`;
+    }).join("");
+  }
+};
+
+window.StudentUI = StudentUI;
+
+/* ========================= DASHBOARD ========================= */
+const Dash = {
+  render(){
+    const tb = document.getElementById("dash-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+
+    const term = Util.lower(document.getElementById("dash-search")?.value || "");
+
+    // Student view: only show the logged-in student's record
+    const role = normalizeRole(Store.session?.role);
+    const isStudent = (role === ROLE.STUDENT);
+    const sid = isStudent ? currentStudentId() : null;
+
+    let students = Object.values(Store.students()).sort((a,b)=>a.name.localeCompare(b.name));
+    if(isStudent){
+      const me = sid ? Store.getStudent(sid) : null;
+      students = me ? [me] : [];
+    }
+
+    const stats = { roll:0, dets:0, neg:0, pos:0, oncall:0 };
+    stats.roll = students.length;
+    stats.oncall = (Store.data.oncall?.logs || []).filter(x=>x.status==="Open").length;
+    stats.dets = (Store.data.detentions||[]).filter(d=>d.status==="Open").length;
+    stats.neg = students.reduce((sum,s)=>sum+(Number(s.neg||0)),0);
+    stats.pos = students.reduce((sum,s)=>sum+(Number(s.pos||0)),0);
+    // Update dashboard stats tiles
+    const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent = String(val); };
+    set("stat-roll", stats.roll);
+    set("stat-dets", stats.dets);
+    set("stat-neg", stats.neg);
+    set("stat-pos", stats.pos);
+    set("stat-oncall", stats.oncall);
+
+    // Extra stats (if tiles exist)
+    const detsAll = (Store.data.detentions||[]);
+    const esc = detsAll.filter(d=>d.status==="Escalated").length;
+    const noshow = detsAll.filter(d=>d.status==="No show").length;
+    const served = detsAll.filter(d=>d.status==="Served").length;
+    const avgAtt = students.length ? (students.reduce((s,x)=>s+(Number(x.attendance||0)),0)/students.length) : 0;
+
+    set("stat-esc", esc);
+    set("stat-noshow", noshow);
+    set("stat-served", served);
+
+    // Activity snapshot (today + last 7 days)
+    const today = Util.todayISO();
+    const weekAgo = Util.isoDaysAgo(7);
+    const detToday = detsAll.filter(d=>String(d.dateISO||"").slice(0,10)===today).length;
+
+    // Incident logs are stored in student.history; count by type and date
+    let wNeg=0, wPos=0;
+    for(const s of students){
+      for(const h of (s.history||[])){
+        const dt = String(h.dateISO||"").slice(0,10);
+        if(dt >= weekAgo && dt <= today){
+          if(h.type==="negative") wNeg += Number(h.amount||1);
+          if(h.type==="positive") wPos += Number(h.amount||1);
+        }
+      }
+    }
+    const wOn = (Store.data.oncall?.logs || []).filter(x=>{
+      const dt = String(x.dateISO||x.timeISO||"").slice(0,10);
+      return dt >= weekAgo && dt <= today;
+    }).length;
+
+    set("stat-today-dets", detToday);
+    set("stat-week-neg", wNeg);
+    set("stat-week-pos", wPos);
+    set("stat-week-oncall", wOn);
+    const attEl=document.getElementById("stat-attavg"); if(attEl) attEl.textContent = (isFinite(avgAtt)?avgAtt.toFixed(1):"0.0");
+
+    // Top 5 concern list
+    const top = students.slice().sort((a,b)=>Number(b.neg||0)-Number(a.neg||0)).slice(0,5);
+    const topEl=document.getElementById("dash-top5");
+    if(topEl){
+      topEl.innerHTML = top.length ? top.map(s=>`<div style="display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.06);">
+          <div><strong>${Util.escape(s.name)}</strong><div class="muted" style="font-size:12px;">Y${Util.escape(String(s.year||""))} ${Util.escape(String(s.form||""))}</div></div>
+          <div class="mono" style="font-weight:950;">${Number(s.neg||0)}</div>
+        </div>`).join("") : '<div class="muted">No data.</div>';
+    }
+
+
+    for(const s of students){
+      const match = !term || Util.lower(s.name).includes(term) || String(s.year).includes(term) || Util.lower(s.form).includes(term);
+      if(!match) continue;
+
+      const tier = Tier.calc(s.neg);
+      const openDets = (Store.data.detentions||[]).filter(d=>d.studentId===s.id && d.status==="Open").length;
+
+      const actions = isStudent
+        ? `<span class="muted">View only</span>`
+        : `<button class="btn btn-primary btn-sm" onclick="Nav.go('students'); StudentUI.openProfile('${s.id}')">Profile</button>
+           <button class="btn btn-ghost btn-sm" onclick="OnCallUI.open('${s.id}')">📣 On Call</button>`;
+
+      const initials = Util.initials(s.name);
+      const att = (s.attendance != null && String(s.attendance).length) ? `${Number(s.attendance).toFixed(1)}%` : "—";
+      const flags = `
+        <span class="pill pill-soft">Att ${att}</span>
+        ${s.pp ? '<span class="pill pill-pp">PP</span>' : ''}
+        ${s.sen ? '<span class="pill pill-sen">SEN</span>' : ''}
+      `;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <div class="stu-cell">
+            <div class="avatar">${Util.escape(initials)}</div>
+            <div class="stu-meta">
+              <div class="stu-name">${Util.escape(s.name)}</div>
+              <div class="stu-sub">${flags}</div>
+            </div>
+          </div>
+        </td>
+        <td>Year ${s.year}</td>
+        <td>${Util.escape(s.form)}</td>
+        <td>${Tier.badgeHTML(tier)}</td>
+        <td class="mono"><strong>${Number(s.neg||0)}</strong></td>
+        <td class="mono"><span class="pill pill-soft">${openDets}</span></td>
+        <td>${actions}</td>
+      `;
+      tb.appendChild(tr);
+    }
+
+    document.getElementById("stat-roll").textContent = String(stats.roll);
+    document.getElementById("stat-dets").textContent = String(stats.dets);
+    document.getElementById("stat-neg").textContent = String(stats.neg);
+    const sp = document.getElementById("stat-pos");
+    if(sp) sp.textContent = String(stats.pos);
+    document.getElementById("stat-oncall").textContent = String(stats.oncall);
+
+    // ===== SLT Overview (MIS-style) =====
+    const sltCard = document.getElementById("dash-slt");
+    const sltBody = document.getElementById("dash-slt-body");
+    const isSLT = [ROLE.SLT, ROLE.DHT, ROLE.HT].includes(role);
+
+    if(sltCard && sltBody){
+      sltCard.style.display = isSLT ? "block" : "none";
+      if(isSLT){
+        const days = Number(document.getElementById("slt-range")?.value || 7);
+        const now = new Date();
+        const start = new Date(now);
+        start.setDate(start.getDate() - (days-1));
+        const startISO = start.toISOString().slice(0,10);
+        const todayISO = now.toISOString().slice(0,10);
+
+        const detsAll = (Store.data.detentions || []);
+        const dets = detsAll.filter(d => (d.dateISO||"") >= startISO);
+        const detsToday = dets.filter(d => (d.dateISO||"") === todayISO);
+        const open = detsAll.filter(d => (d.status||"") === "Open");
+
+        const reasonCount = new Map();
+        for(const d of dets){
+          const r = Util.norm(d.mainReason || d.reason || "Unspecified");
+          reasonCount.set(r, (reasonCount.get(r)||0) + 1);
+        }
+        const topReasons = [...reasonCount.entries()].sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+        const allStudents = Object.values(Store.students());
+        const atRisk = allStudents
+          .map(s=>({ id:s.id, name:s.name, form:s.form||"", year:s.year||"", neg:Number(s.neg||0), tier:Tier.calc(Number(s.neg||0)) }))
+          .sort((a,b)=>b.neg-a.neg)
+          .slice(0,8);
+
+        const yearMap = new Map();
+        for(const s of allStudents){
+          const y = String(s.year||"?");
+          yearMap.set(y, (yearMap.get(y)||0) + Number(s.neg||0));
+        }
+        const years = [...yearMap.entries()].sort((a,b)=>Number(a[0]) - Number(b[0]));
+
+        sltBody.innerHTML = `
+          <div class="grid" style="margin-bottom:14px;">
+            <div class="stat"><div class="v">${detsToday.length}</div><div class="l">Detentions (today)</div></div>
+            <div class="stat"><div class="v">${dets.length}</div><div class="l">Detentions (${days} days)</div></div>
+            <div class="stat"><div class="v">${open.length}</div><div class="l">Open detentions</div></div>
+            <div class="stat"><div class="v">${allStudents.filter(s=>Tier.calc(Number(s.neg||0))===6).length}</div><div class="l">Tier 6 students</div></div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Top reasons</div>
+              <div class="sep"></div>
+              ${topReasons.length ? topReasons.map(([r,c])=>`
+                <div style="display:flex; justify-content:space-between; gap:10px; margin-bottom:10px;">
+                  <div style="font-weight:800;">${Util.escape(r)}</div>
+                  <div class="pill">${c}</div>
+                </div>`).join("") : `<div class="muted">No detentions in this range.</div>`}
+            </div>
+
+            <div>
+              <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">At‑risk (highest negatives)</div>
+              <div class="sep"></div>
+              ${atRisk.map(s=>`
+                <div style="display:flex; justify-content:space-between; gap:10px; margin-bottom:12px;">
+                  <div>
+                    <div style="font-weight:900;">${Util.escape(s.name)}</div>
+                    <div class="muted">Year ${Util.escape(String(s.year))} · ${Util.escape(String(s.form))}</div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-weight:900;">${s.neg}</div>
+                    <div>${Tier.badgeHTML(s.tier)}</div>
+                  </div>
+                </div>`).join("")}
+            </div>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="muted" style="font-weight:900; text-transform:uppercase; font-size:11px; letter-spacing:.6px;">Year group negatives</div>
+          <div class="sep"></div>
+          ${years.map(([y,total])=>`
+            <div style="display:flex; justify-content:space-between; gap:10px; margin-bottom:10px;">
+              <div style="font-weight:900;">Year ${Util.escape(String(y))}</div>
+              <div class="pill">${Number(total)}</div>
+            </div>`).join("")}
+        `;
+      }
+    }
+  }
+};
+
+window.Dash = Dash;
+
+
+/* ========================= DETENTIONS UI ========================= */
+const DetUI = {
+  selected: new Set(),
+  render(){
+    const tb = document.getElementById("det-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+
+    const term = Util.lower(document.getElementById("det-search")?.value || "");
+    const filter = document.getElementById("det-filter")?.value || "all";
+    const fromISO = document.getElementById("det-from")?.value || "";
+    const toISO = document.getElementById("det-to")?.value || "";
+    const yearF = document.getElementById("det-year")?.value || "all";
+
+    let list = Store.data.detentions.slice().sort((a,b)=> (b.dateISO||"").localeCompare(a.dateISO||""));
+
+    // Student security: students can only see THEIR detentions
+    const rDet = normalizeRole(Store.session?.role);
+    const sidDet = (rDet === ROLE.STUDENT) ? currentStudentId() : null;
+    if(sidDet){
+      list = list.filter(d=>d.studentId === sidDet);
+    }
+
+    const filtered = list.filter(d=>{
+      const inTerm = !term ||
+        Util.lower(d.studentName).includes(term) ||
+        Util.lower(d.form).includes(term) ||
+        String(d.year).includes(term) ||
+        Util.lower(d.mainReason || d.reason || "").includes(term);
+      const inStatus = (filter==="all") || (d.status === filter);
+      const inFrom = !fromISO || (d.dateISO||"") >= fromISO;
+      const inTo = !toISO || (d.dateISO||"") <= toISO;
+      const inYear = (yearF==="all") || String(d.year) === String(yearF);
+      return inTerm && inStatus && inFrom && inTo && inYear;
+    });
+
+    if(filtered.length === 0){
+      tb.innerHTML = `<tr><td colspan="11" class="muted">No detentions found.</td></tr>`;
+      return;
+    }
+
+    for(const d of filtered){
+      const manage = [];
+
+      if(can("manageDets") && d.status==="Open"){
+        manage.push(`<button class="btn btn-primary btn-sm" onclick="DetUI.setStatus('${d.id}','Served')">✓ Served</button>`);
+        manage.push(`<button class="btn btn-ghost btn-sm" onclick="DetUI.moveNextDay('${d.id}')">Move +1d</button>`);
+        manage.push(`<button class="btn btn-ghost btn-sm" onclick="DetUI.noShow('${d.id}')">No show</button>`);
+        manage.push(`<button class="btn btn-danger btn-sm" onclick="DetUI.escalate('${d.id}')">Escalate</button>`);
+        manage.push(`<button class="btn btn-ghost btn-sm" onclick="DetUI.setStatus('${d.id}','Cancelled')">Cancel</button>`);
+      }
+
+      // SLT and HOY can delete (and higher)
+      if(can("deleteDets")){
+        manage.push(`<button class="btn btn-danger btn-sm" onclick="DetUI.delete('${d.id}')">Delete</button>`);
+      }
+
+      const tr = document.createElement("tr");
+      tr.setAttribute("data-det-id", d.id);
+      tr.innerHTML = `
+        <td><input type="checkbox" ${DetUI.selected.has(d.id) ? "checked" : ""} onchange="DetUI.toggle('${d.id}', this.checked)" /></td>
+        <td>${Util.escape(d.dateText || "")}</td>
+        <td><strong>${Util.escape(d.studentName || "")}</strong></td>
+        <td>Year ${d.year}</td>
+        <td>${Util.escape(d.form || "")}</td>
+        <td>${Tier.badgeHTML(d.tier)}</td>
+        <td class="mono">${d.minutes}m</td>
+        <td>${Util.escape(d.mainReason || d.reason || "")}</td>
+        <td>${Util.escape(d.authority || "")}</td>
+        <td><span class="pill">${Util.escape(d.status || "")}</span></td>
+        <td>${manage.join(" ") || "-"}</td>
+      `;
+      tb.appendChild(tr);
+    }
+  },
+
+  toggle(id, checked){
+    if(checked) this.selected.add(id); else this.selected.delete(id);
+    this.updateBulkBar();
+  },
+
+  toggleSelectAll(checked){
+    // Select all currently visible rows
+    const boxes = document.querySelectorAll("#det-tbody input[type=checkbox]");
+    boxes.forEach(b=>{
+      b.checked = checked;
+      const tr = b.closest("tr");
+      const id = tr?.getAttribute("data-det-id");
+      if(!id) return;
+      if(checked) this.selected.add(id); else this.selected.delete(id);
+    });
+    this.updateBulkBar();
+  },
+
+  clearSelection(){
+    this.selected.clear();
+    const boxes = document.querySelectorAll("#det-tbody input[type=checkbox]");
+    boxes.forEach(b=>b.checked=false);
+    const all = document.getElementById("det-select-all");
+    if(all) all.checked = false;
+    this.updateBulkBar();
+  },
+
+  updateBulkBar(){
+    const bar = document.getElementById("det-bulk");
+    const cnt = this.selected.size;
+    const pill = document.getElementById("det-selected-count");
+    if(pill) pill.textContent = `${cnt} selected`;
+    if(bar) bar.style.display = cnt>0 ? "flex" : "none";
+  },
+
+  bulkStatus(status){
+    if(!can("manageDets")) return Util.toast("Permission denied","You cannot manage detentions.");
+    const ids = [...this.selected];
+    for(const id of ids){
+      const d = Store.data.detentions.find(x=>x.id===id);
+      if(!d) continue;
+      d.status = status;
+      Audit.log("detention_status", { id, studentId:d.studentId, studentName:d.studentName, status });
+    }
+    Store.save();
+    this.clearSelection();
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  
+
+  moveNextDay(id){
+    if(!can("manageDets")) return Util.toast("Permission denied","You cannot manage detentions.");
+    const d = Store.data.detentions.find(x=>x.id===id);
+    if(!d) return;
+    if(d.status !== "Open") return Util.toast("Not open","Only open detentions can be moved.");
+    const dt = new Date((d.dateISO || Util.todayISO()) + "T00:00:00");
+    dt.setDate(dt.getDate()+1);
+    const iso = dt.toISOString().split("T")[0];
+    d.dateISO = iso;
+    d.dateText = new Date(iso+"T00:00:00").toLocaleDateString("en-GB");
+    Audit.log("detention_move_next_day", { id:d.id, studentId:d.studentId, dateISO:iso });
+    Store.save();
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  noShow(id){
+    if(!can("manageDets")) return Util.toast("Permission denied","You cannot manage detentions.");
+    const d = Store.data.detentions.find(x=>x.id===id);
+    if(!d) return;
+    if(d.status !== "Open") return Util.toast("Not open","Only open detentions can be crossed off.");
+    d.status = "No show";
+    Audit.log("detention_no_show", { id:d.id, studentId:d.studentId });
+    Store.save();
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  escalate(id){
+    if(!can("manageDets")) return Util.toast("Permission denied","You cannot escalate detentions.");
+    const d = Store.data.detentions.find(x=>x.id===id);
+    if(!d) return;
+    if(d.status !== "Open" && d.status !== "No show") return Util.toast("Not eligible","Only Open/No show detentions can be escalated.");
+
+    const nextTier = Math.min(6, Number(d.tier||2) + 1);
+    const addByTier = { 2:1, 3:2, 4:3, 5:7, 6:10 };
+    const add = Number(addByTier[nextTier] || 0);
+
+    // schedule for next school day (next day)
+    const dt = new Date((d.dateISO || Util.todayISO()) + "T00:00:00");
+    dt.setDate(dt.getDate()+1);
+    const iso = dt.toISOString().split("T")[0];
+
+    const s = Store.getStudent(d.studentId);
+    if(!s) return Util.toast("Student missing","Student record not found.");
+
+    const reason = d.mainReason || d.reason || "Escalated detention";
+    const detail = d.reasonDetail || "";
+
+    const det2 = DetentionEngine.createForTier(s.id, nextTier, reason, Store.session?.usernameLower, iso);
+    if(det2){
+      det2.mainReason = reason;
+      det2.reasonDetail = `Escalated from Tier ${d.tier}${detail?(" — "+detail):""}`;
+    }
+
+    // update student negatives (always add full tier weight, unlimited)
+    s.neg = Number(s.neg||0) + add;
+
+    // mark original as escalated
+    d.status = "Escalated";
+    d.escalatedTo = det2?.id || null;
+
+    // history
+    s.history = s.history || [];
+    s.history.push({
+      dateISO: iso,
+      dateText: new Date(iso+"T00:00:00").toLocaleDateString("en-GB"),
+      timeText: Util.nowTime(),
+      type: "detention",
+      reason: `Detention escalated to Tier ${nextTier}`,
+      note: `${reason} · Escalated from Tier ${d.tier} · ${det2?.minutes||""}m (${det2?.authority||""}) · By ${Store.session?.usernameLower} (${Store.session?.role})`
+    });
+
+    Audit.log("detention_escalate", { id:d.id, studentId:d.studentId, fromTier:d.tier, toTier:nextTier, newId:det2?.id, dateISO:iso });
+
+    Store.save();
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  bulkMoveNextDay(){
+    const ids = [...this.selected];
+    for(const id of ids) this.moveNextDay(id);
+    this.clearSelection();
+  },
+
+  bulkNoShow(){
+    const ids = [...this.selected];
+    for(const id of ids) this.noShow(id);
+    this.clearSelection();
+  },
+
+  bulkEscalate(){
+    const ids = [...this.selected];
+    if(ids.length===0) return;
+    if(!confirm(`Escalate ${ids.length} detention(s) to the next tier?`)) return;
+    for(const id of ids) this.escalate(id);
+    this.clearSelection();
+  },
+
+bulkDelete(){
+    if(!can("deleteDets")) return Util.toast("Permission denied","Only SLT/HOY (and above) can delete detentions.");
+    const ids = [...this.selected];
+    if(ids.length===0) return;
+    if(!confirm(`Delete ${ids.length} detention(s) permanently?`)) return;
+    Store.data.detentions = Store.data.detentions.filter(d=>{
+      const keep = !this.selected.has(d.id);
+      if(!keep) Audit.log("detention_delete", { id:d.id, studentId:d.studentId, studentName:d.studentName });
+      return keep;
+    });
+    Store.save();
+    this.clearSelection();
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  exportCSV(){
+    const rows = (Store.data.detentions||[]).slice().sort((a,b)=> (b.dateISO||"").localeCompare(a.dateISO||""));
+    const headers = ["date","student","year","form","tier","minutes","authority","status","main_reason","detail","staff"];
+    const csv = [headers.join(",")].concat(rows.map(d=>{
+      const vals = [
+        d.dateISO||"", d.studentName||"", d.year||"", d.form||"", d.tier||"", d.minutes||"",
+        d.authority||"", d.status||"", (d.mainReason||d.reason||"").replace(/\n/g," "), (d.reasonDetail||"").replace(/\n/g," "), d.staff||""
+      ];
+      return vals.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",");
+    })).join("\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `detentions_${Util.todayISO()}.csv`;
+    a.click();
+  },
+
+  printOpen(){
+    const open = (Store.data.detentions||[]).filter(d=>d.status==="Open").sort((a,b)=> (a.dateISO||"").localeCompare(b.dateISO||""));
+    const w = window.open("", "_blank");
+    const html = `
+      <html><head><title>Open Detentions</title>
+      <style>
+        body{font-family:Arial,sans-serif;padding:18px;}
+        h2{margin:0 0 10px 0;}
+        table{width:100%; border-collapse:collapse; margin-top:10px;}
+        th,td{border:1px solid #ddd; padding:8px; font-size:12px;}
+        th{background:#f3f4f6; text-align:left;}
+      </style>
+  <style>
+    /* --- V1.7.5 UI Fit + Free Scrolling Patch --- */
+    html, body{
+      height:100%;
+      overflow-x:hidden; /* prevent sideways cut-off */
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: none;
+    }
+    body{ position:relative; }
+
+    /* Make main area scroll naturally without clipping */
+    .app{ min-height:100vh; }
+    .main{
+      min-width: 0; /* critical for flex children to prevent overflow */
+      overflow-x: hidden;
+    }
+
+    /* Ensure toolbars wrap and never overflow */
+    .tools{ flex-wrap: wrap; }
+    .topbar{ flex-wrap: wrap; }
+    .topbar .left{ min-width: 220px; }
+    .topbar > div{ min-width: 0; }
+
+    /* Tables: keep inside their container on desktop, smooth scroll */
+    .table-wrap{
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 16px;
+    }
+    table{ max-width: 100%; }
+
+    /* Cards: avoid being cut off at bottom on mobile */
+    .main{ padding-bottom: 26px; }
+
+    /* Modal panels: allow full-screen scroll on small devices */
+    .panel{
+      max-height: calc(100vh - 16px);
+    }
+    .panel-body{ padding-bottom: 18px; }
+
+    /* Mobile: make input widths behave and fill screen cleanly */
+    @media(max-width: 980px){
+      .main{ padding: 12px; padding-bottom: 26px; }
+      .topbar{ gap: 10px; }
+      .input, .select{ width: 100%; }
+      .tools > *{ max-width: 100%; }
+      .card-head{ padding: 12px 14px; }
+      .card-body{ padding: 14px; }
+    }
+  </style>
+</head><body>
+      <h2>Open Detentions – ${Util.todayISO()}</h2>
+      <div>Count: ${open.length}</div>
+      <table><thead><tr>
+        <th>Date</th><th>Student</th><th>Year</th><th>Form</th><th>Tier</th><th>Minutes</th><th>Reason</th>
+      </tr></thead><tbody>
+        ${open.map(d=>`<tr><td>${d.dateText||""}</td><td>${Util.escape(d.studentName||"")}</td><td>${d.year}</td><td>${Util.escape(d.form||"")}</td><td>${d.tier}</td><td>${d.minutes}m</td><td>${Util.escape(d.mainReason||d.reason||"")}</td></tr>`).join("")}
+      </tbody></table>
+      <script>window.print();<\/script>
+      </body></html>`;
+    w.document.write(html);
+    w.document.close();
+  },
+
+
+  setStatus(detId, status){
+    if(!can("manageDets")) return Util.toast("Permission denied","You cannot manage detentions.");
+    const d = Store.data.detentions.find(x=>x.id===detId);
+    if(!d) return;
+    d.status = status;
+    Audit.log("detention_status", { id: d.id, studentId:d.studentId, studentName:d.studentName, status });
+    Store.save();
+
+    // refresh affected views
+    this.render();
+    Dash.render();
+    if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+  },
+
+  delete(detId){
+    if(!can("deleteDets")) return Util.toast("Permission denied","Only SLT/HOY (and above) can delete detentions.");
+    const d = Store.data.detentions.find(x=>x.id===detId);
+    if(!d) return;
+    if(confirm(`Delete detention for ${d.studentName} permanently?`)){
+      Store.data.detentions = Store.data.detentions.filter(x=>x.id!==detId);
+      Audit.log("detention_delete", { id: d.id, studentId:d.studentId, studentName:d.studentName });
+      Store.save();
+      this.render();
+      Dash.render();
+      if(Store.activeStudentId) StudentUI.renderProfileDetentions();
+    }
+  }
+};
+window.DetUI = DetUI;
+
+/* ========================= SUSPENSIONS UI ========================= */
+const SuspUI = {
+  render(){
+    const tb = document.getElementById("susp-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+
+    const term = Util.lower(document.getElementById("susp-search")?.value || "");
+    const list = Store.data.suspensions.slice().sort((a,b)=> (b.dateISO||"").localeCompare(a.dateISO||""));
+
+    const filtered = list.filter(sp=>{
+      return !term || Util.lower(sp.studentName).includes(term) || Util.lower(sp.reason).includes(term) || Util.lower(sp.status).includes(term);
+    });
+
+    if(filtered.length === 0){
+      tb.innerHTML = `<tr><td colspan="7" class="muted">No suspensions found.</td></tr>`;
+      return;
+    }
+
+    for(const sp of filtered){
+      const manage = [];
+      if(can("closeOnCall") && sp.status==="Active"){
+        manage.push(`<button class="btn btn-primary btn-sm" onclick="SuspUI.resolve('${sp.id}')">Reintegrate</button>`);
+      }
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${Util.escape(sp.dateText || "")}</td>
+        <td><strong>${Util.escape(sp.studentName || "")}</strong></td>
+        <td>${Util.escape(sp.reason || "")}</td>
+        <td class="mono">${sp.days}</td>
+        <td>${Util.escape(sp.returnText || "")}</td>
+        <td><span class="pill">${Util.escape(sp.status || "")}</span></td>
+        <td>${manage.join(" ") || "-"}</td>
+      `;
+      tb.appendChild(tr);
+    }
+  },
+
+  resolve(id){
+    if(!can("closeOnCall")) return Util.toast("Permission denied","You cannot resolve suspensions.");
+    const sp = Store.data.suspensions.find(x=>x.id===id);
+    if(!sp) return;
+    if(confirm("Confirm reintegration?")){
+      sp.status = "Completed";
+      Store.save();
+      this.render();
+      Dash.render();
+    }
+  }
+};
+window.SuspUI = SuspUI;
+
+/* ========================= LOGGING UI ========================= */
+const LogUI = {
+  // minimal reason sets (you can expand later)
+  reasons: {
+    negative: [
+      "Chewing gum","Making noises","Disruptive behaviour","Uniform breach","Lack of equipment","Late to lesson","No homework",
+      "Persistently disruptive","Rude to staff","Defiance/refusal","Inappropriate language","Bullying","Damage to property",
+      "Fighting","Racist incident","Homophobic incident","Theft"
+    ],
+    positive: [
+      "Excellent effort","Outstanding achievement","Helping others","Positive contribution","Excellent attendance"
+    ],
+    suspension: [
+      "Physical assault (pupil)","Physical assault (adult)","Verbal abuse/threatening behaviour","Bullying","Racist abuse",
+      "Sexual misconduct","Drug/alcohol related","Damage","Theft","Persistent disruptive behaviour"
+    ]
+  },
+
+  reset(){
+    document.getElementById("log-student").value = "";
+    document.getElementById("log-note").value = "";
+    const safe = document.getElementById("log-safe"); if(safe) safe.checked = false;
+    const conf = document.getElementById("log-conf"); if(conf) conf.value = "";
+    const amtSel = document.getElementById("log-amount"); if(amtSel) amtSel.value = "1";
+    const amtCus = document.getElementById("log-amount-custom"); if(amtCus) amtCus.value = "1";
+    document.getElementById("log-type").value = "negative";
+    this.onTypeChange();
+  },
+
+  onTypeChange(){
+    const type = document.getElementById("log-type").value;
+    const reasonSel = document.getElementById("log-reason");
+    const wrapDays = document.getElementById("log-susp-days-wrap");
+
+    reasonSel.innerHTML = "";
+    const list = this.reasons[type] || [];
+    reasonSel.innerHTML = `<option value="" disabled selected>-- Select reason --</option>` +
+      list.map(r=>`<option value="${Util.escape(r)}">${Util.escape(r)}</option>`).join("");
+
+    wrapDays.style.display = (type==="suspension") ? "block" : "none";
+
+    // Amount selector only for negative/positive
+    const aw = document.getElementById("log-amount-wrap");
+    if(aw) aw.style.display = (type==="negative" || type==="positive") ? "block" : "none";
+    this.onAmountChange();
+
+    this.updatePreview();
+    reasonSel.onchange = () => this.updatePreview();
+    document.getElementById("log-note").oninput = () => this.updatePreview();
+
+    // confidential note only for SLT/DHT/HT and only when safeguarding checked
+    const confWrap = document.getElementById("log-conf-wrap");
+    const safeCb = document.getElementById("log-safe");
+    if(confWrap && safeCb){
+      const role = normalizeRole(Store.session?.role);
+      const allowed = [ROLE.SLT, ROLE.DHT, ROLE.HT].includes(role);
+      const sync = () => { confWrap.style.display = (allowed && safeCb.checked) ? "block" : "none"; this.updatePreview(); };
+      safeCb.onchange = sync;
+      document.getElementById("log-conf").oninput = () => this.updatePreview();
+      sync();
+    }
+  },
+
+  onAmountChange(){
+    const sel = document.getElementById("log-amount");
+    const custom = document.getElementById("log-amount-custom");
+    if(!sel || !custom) return;
+    custom.style.display = (sel.value === "custom") ? "block" : "none";
+    if(sel.value !== "custom"){
+      custom.value = sel.value;
+    }
+    this.updatePreview();
+  },
+
+  getAmount(){
+    const type = document.getElementById("log-type").value;
+    if(!(type==="negative" || type==="positive")) return 0;
+    const sel = document.getElementById("log-amount");
+    const custom = document.getElementById("log-amount-custom");
+    let v = 1;
+    if(sel && sel.value === "custom"){
+      v = Number(custom?.value || 1);
+    } else if(sel){
+      v = Number(sel.value || 1);
+    }
+    if(!Number.isFinite(v) || v < 1) v = 1;
+    return Math.floor(v);
+  },
+
+  quickOpen(studentId, type){
+    const s = Store.getStudent(studentId);
+    if(!s) return;
+    Nav.go("logging");
+    document.getElementById("log-student").value = s.name;
+    document.getElementById("log-type").value = type;
+    this.onTypeChange();
+    setTimeout(()=>document.getElementById("log-note").focus(), 50);
+  },
+
+  quickAdd(studentId, type, amount){
+    const s = Store.getStudent(studentId);
+    if(!s) return;
+    Nav.go("logging");
+    document.getElementById("log-student").value = s.name;
+    document.getElementById("log-type").value = type;
+    this.onTypeChange();
+
+    const sel = document.getElementById("log-amount");
+    const cus = document.getElementById("log-amount-custom");
+    if(sel && cus){
+      if([1,5,10].includes(Number(amount))){
+        sel.value = String(amount);
+        cus.value = String(amount);
+      } else {
+        sel.value = "custom";
+        cus.value = String(amount);
+      }
+      this.onAmountChange();
+    }
+
+    setTimeout(()=>document.getElementById("log-reason").focus(), 50);
+  },
+
+  updatePreview(){
+    const out = document.getElementById("log-preview");
+    if(!out) return;
+    const name = Util.norm(document.getElementById("log-student").value);
+    const type = document.getElementById("log-type").value;
+    const reason = document.getElementById("log-reason").value || "(no reason selected)";
+    const safe = !!document.getElementById("log-safe")?.checked;
+    const conf = Util.norm(document.getElementById("log-conf")?.value || "");
+    const role = normalizeRole(Store.session?.role);
+    const canSeeConf = [ROLE.SLT, ROLE.DHT, ROLE.HT].includes(role);
+
+
+    const s = Store.findStudentByName(name);
+    if(!s){
+      out.innerHTML = `<span class="muted">Select a valid student.</span>`;
+      return;
+    }
+
+    const negNow = Number(s.neg||0);
+    const tierNow = Tier.calc(negNow);
+
+    if(type==="negative"){
+      const amt = this.getAmount() || 1;
+      const newNeg = negNow + amt;
+      const newTier = Tier.calc(newNeg);
+      const det = Tier.detentionMap[newTier];
+      const detText = det ? `→ Detention: ${det.minutes}m (${det.authority})` : "";
+      out.innerHTML = `Current: ${Tier.badgeHTML(tierNow)} · Negatives: <strong>${negNow}</strong><br>
+        After log: ${Tier.badgeHTML(newTier)} · Negatives: <strong>${newNeg}</strong> <span class="muted">(+'${amt}')</span> ${detText}`;
+      return;
+    }
+
+    if(type==="positive"){
+      const amt = this.getAmount() || 1;
+      out.innerHTML = `Logging positive for <strong>${Util.escape(s.name)}</strong>: ${Util.escape(reason)} <span class="muted">(+'${amt}')</span>`;
+      return;
+    }
+
+    if(type==="suspension"){
+      const days = Number(document.getElementById("log-susp-days").value || 1);
+      out.innerHTML = `Suspension for <strong>${Util.escape(s.name)}</strong>: ${Util.escape(reason)}<br>
+        Days: <strong>${days}</strong> (return date calculated)`;
+      return;
+    }
+  },
+
+  submit(){
+    const name = Util.norm(document.getElementById("log-student").value);
+    const s = Store.findStudentByName(name);
+    if(!s) return Util.toast("Invalid student","Select a valid student name.");
+    const type = document.getElementById("log-type").value;
+    const reason = document.getElementById("log-reason").value;
+    const note = Util.norm(document.getElementById("log-note").value);
+
+    if(!reason) return Util.toast("Missing reason","Please select a reason.");
+
+    const now = new Date();
+    const entry = {
+      dateISO: Util.todayISO(),
+      dateText: now.toLocaleDateString("en-GB"),
+      timeText: now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}),
+      type,
+      reason,
+      note,
+      safeguarding: !!document.getElementById("log-safe")?.checked,
+      confidential: Util.norm(document.getElementById("log-conf")?.value || ""),
+      staff: Store.session?.usernameLower || "unknown",
+      role: Store.session?.role || "unknown"
+    };
+
+    // Apply consequences
+    if(type==="negative"){
+      const prevNeg = Number(s.neg||0);
+      const amt = this.getAmount() || 1;
+      s.neg = prevNeg + amt;
+      // Tier crossing logic -> detention issuance (uses final neg)
+      // Automatic detentions disabled (manual/bulk only)
+} else if(type==="positive"){
+      const amt = this.getAmount() || 1;
+      s.pos = Number(s.pos||0) + amt;
+    } else if(type==="suspension"){
+      const days = Number(document.getElementById("log-susp-days").value || 1);
+      const ret = new Date();
+      ret.setDate(ret.getDate() + Math.ceil(days));
+
+      Store.data.suspensions.push({
+        id: Util.uid(),
+        studentId: s.id,
+        studentName: s.name,
+        dateISO: Util.todayISO(),
+        dateText: now.toLocaleDateString("en-GB"),
+        reason,
+        days,
+        returnISO: ret.toISOString().split("T")[0],
+        returnText: ret.toLocaleDateString("en-GB"),
+        status: "Active",
+        staff: Store.session?.usernameLower || "unknown",
+        role: Store.session?.role || "unknown",
+        note
+      });
+
+      // Suspensions also add negatives strongly (as your original style did)
+      const prevNeg = Number(s.neg||0);
+      s.neg = prevNeg + 3;
+      // Automatic detentions disabled (manual/bulk only)
+    }
+
+    // Store history entry
+    s.history = s.history || [];
+    s.history.push(entry);
+
+    Audit.log("incident_logged", { studentId: s.id, studentName: s.name, type, reason, amount: (type==="negative"||type==="positive") ? (this.getAmount()||1) : null, safeguarding: entry.safeguarding });
+    Store.save();
+    App.populateStudentList();
+    App.populateStudentSelects();
+
+    Util.toast("Record saved", `${s.name} · ${type}`);
+    this.reset();
+    Dash.render();
+    StudentUI.renderList();
+    if(Store.activeStudentId===s.id){
+      StudentUI.openProfile(s.id);
+    }
+  }
+};
+
+window.LogUI = LogUI;
+
+/* ========================= QUICK LOG (PROFILE) ========================= */
+const QuickLogUI = {
+  last: { type:"negative", amount:1 },
+
+  setup(studentId){
+    // Populate reasons for quick logs (behaviour-style negative bank + positives)
+    const sel = document.getElementById("ql-reason");
+    if(!sel) return;
+
+    // Merge: existing negative reasons + detention reason bank for realism
+    const neg = Array.from(new Set([...(LogUI.reasons?.negative||[]), ...(window.DETENTION_REASON_BANK||[])]));
+    const pos = Array.from(new Set([...(LogUI.reasons?.positive||[]), "Excellent work", "Improved behaviour", "Kindness / respect", "Leadership", "Attendance improvement"]));
+
+    // Default to negative list for quick log reasons
+    const prev = sel.value;
+    sel.innerHTML = "";
+    const optGroupNeg = document.createElement("optgroup");
+    optGroupNeg.label = "Behaviour / Negative reasons";
+    neg.forEach(r=>{
+      const o=document.createElement("option"); o.value=r; o.textContent=r; optGroupNeg.appendChild(o);
+    });
+    const optGroupPos = document.createElement("optgroup");
+    optGroupPos.label = "Achievement / Positive reasons";
+    pos.forEach(r=>{
+      const o=document.createElement("option"); o.value=r; o.textContent=r; optGroupPos.appendChild(o);
+    });
+
+    sel.appendChild(optGroupNeg);
+    sel.appendChild(optGroupPos);
+
+    if(prev) sel.value = prev;
+    if(!sel.value) sel.selectedIndex = 0;
+
+    const note = document.getElementById("ql-note");
+    if(note) note.value = "";
+    this.last = { type:"negative", amount:1 };
+  },
+
+  add(type, amount){
+    this.last = { type, amount: Number(amount)||1 };
+    this.save();
+  },
+
+  save(){
+    const studentId = Store.activeStudentId;
+    const s = Store.getStudent(studentId);
+    if(!s) return Util.toast("No student","Open a student profile first.");
+
+    const role = normalizeRole(Store.session?.role);
+    if(role === ROLE.STUDENT) return Util.toast("Blocked","Students cannot log points.");
+
+    const reasonSel = document.getElementById("ql-reason");
+    const reason = reasonSel ? Util.norm(reasonSel.value) : "";
+    const note = Util.norm(document.getElementById("ql-note")?.value || "");
+
+    if(!reason) return Util.toast("Missing reason","Select a reason first.");
+
+    const now = new Date();
+    const entry = {
+      dateISO: Util.todayISO(),
+      dateText: now.toLocaleDateString("en-GB"),
+      timeText: now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}),
+      type: this.last.type,
+      reason,
+      note,
+      safeguarding: false,
+      confidential: "",
+      staff: Store.session?.usernameLower || "unknown",
+      role: Store.session?.role || "unknown",
+      quick: true,
+      amount: this.last.amount
+    };
+
+    if(entry.type === "negative"){
+      s.neg = Number(s.neg||0) + this.last.amount; // unlimited (no cap)
+    } else if(entry.type === "positive"){
+      s.pos = Number(s.pos||0) + this.last.amount;
+    } else {
+      return Util.toast("Invalid","Quick log supports positives/negatives only.");
+    }
+
+    s.history = s.history || [];
+    s.history.push(entry);
+
+    Audit.log("quick_log", { studentId: s.id, studentName: s.name, type: entry.type, reason, amount: this.last.amount });
+    Store.save();
+
+    Util.toast("Quick log saved", `${s.name} · ${entry.type} +${this.last.amount}`);
+    Dash.render();
+    StudentUI.renderList();
+    StudentUI.openProfile(s.id);
+  }
+};
+window.QuickLogUI = QuickLogUI;
+
+/* ========================= FINAL WIRING FOR PART 3 ========================= */
+(function wirePart3(){
+  // keep form synced: year -> form options (simple)
+  const y = document.getElementById("ms-year");
+  const f = document.getElementById("ms-form");
+  if(y && f){
+    y.onchange = () => {
+      const yr = Number(y.value);
+      f.innerHTML = FORMS.map(fl => `<option value="${yr}${fl}">${yr}${fl}</option>`).join("");
+      f.value = `${yr}A`;
+    };
+    // init
+    y.dispatchEvent(new Event("change"));
+  }
+
+  // init logging form selects
+  if(document.getElementById("log-type")){
+    LogUI.onTypeChange();
+  }
+
+  // initial renders (if app already entered)
+  if(Store.session){
+    Dash.render();
+    StudentUI.renderList();
+    DetUI.render();
+    SuspUI.render();
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   EDUTRACK MIS V1.0 – FINAL ENGINE
+   PART 4/4: SLT On Call + Letters + Admin + Final Wiring
+   ============================================================ */
+
+/* ========================= ON CALL UI =========================
+RULES CONFIRMED:
+- ANY staff can trigger on call (lesson use)
+- Must select: student, room, type (Emergency/Medical/Removal)
+- Alerts who is on call (from rota set by Headteacher)
+- SLT+ can close on call
+- Headteacher can clear/reset system; others cannot
+=============================================================== */
+const OnCallUI = {
+  open(prefStudentId){
+    // Anyone can trigger
+    App.populateStudentSelects();
+    const modal = document.getElementById("modal-oncall");
+    modal.classList.add("show");
+
+    // Prefill student if provided
+    const sel = document.getElementById("oc-student");
+    if(prefStudentId && sel){
+      sel.value = prefStudentId;
+    }
+
+    // Prefill room empty, type default Removal (common) but keep Emergency first in list
+    document.getElementById("oc-room").value = "";
+    document.getElementById("oc-type").value = "Emergency";
+
+    // show rota in modal
+    const who = (Store.data.oncall.rota || []).join(", ") || "(not set)";
+    document.getElementById("oc-alert-who").textContent = who;
+  },
+
+  openPicker(){
+    // Open bulk modal with an internal student picker (no pre-selection needed)
+    if(!can("issueManualDet")){
+      return Util.toast("Permission denied","Students cannot issue detentions.");
+    }
+    this._ids = [];
+    const picker = document.getElementById("bd-picker");
+    if(picker) picker.style.display = "block";
+    document.getElementById("bd-count").textContent = "0";
+    fillDetentionReasonSelect(document.getElementById("bd-main-reason"));
+    document.getElementById("bd-main-reason").value = "";
+    document.getElementById("bd-tier").value = "2";
+    document.getElementById("bd-detail").value = "";
+    const date = document.getElementById("bd-date");
+    if(date) date.value = Util.todayISO();
+    const search = document.getElementById("bd-search"); if(search) search.value = "";
+    this.renderPicker();
+
+    // Wire preview
+    document.getElementById("bd-tier").onchange = () => this.preview();
+    document.getElementById("bd-main-reason").onchange = () => this.preview();
+    document.getElementById("bd-detail").oninput = () => this.preview();
+    document.getElementById("bd-date").onchange = () => this.preview();
+
+    this.preview();
+    document.getElementById("modal-bulk-det").classList.add("show");
+  },
+
+  renderPicker(){
+    const wrap = document.getElementById("bd-picker-list");
+    if(!wrap) return;
+    wrap.innerHTML = "";
+    const term = Util.lower(document.getElementById("bd-search")?.value || "");
+    const studs = Object.values(Store.students()).sort((a,b)=>a.name.localeCompare(b.name));
+    for(const s of studs){
+      const txt = `${s.name} ${s.form} ${s.year}`.toLowerCase();
+      if(term && !txt.includes(term)) continue;
+      const row = document.createElement("label");
+      row.style.display = "flex";
+      row.style.alignItems = "center";
+      row.style.gap = "10px";
+      row.style.cursor = "pointer";
+      row.innerHTML = `
+        <input type="checkbox" ${this._ids.includes(s.id) ? "checked" : ""} onchange="BulkDetUI.togglePick('${s.id}', this.checked)" />
+        <div style="display:flex; flex-direction:column;">
+          <strong>${Util.escape(s.name)}</strong>
+          <span class="muted">Year ${Util.escape(String(s.year||""))} · ${Util.escape(String(s.form||""))}</span>
+        </div>
+      `;
+      wrap.appendChild(row);
+    }
+  },
+
+  togglePick(id, checked){
+    if(checked){
+      if(!this._ids.includes(id)) this._ids.push(id);
+    } else {
+      this._ids = this._ids.filter(x=>x!==id);
+    }
+    document.getElementById("bd-count").textContent = String(this._ids.length);
+    this.preview();
+  },
+
+  pickAll(state){
+    const studs = Object.values(Store.students()).map(s=>s.id);
+    this._ids = state ? studs : [];
+    document.getElementById("bd-count").textContent = String(this._ids.length);
+    this.renderPicker();
+    this.preview();
+  },
+
+
+
+  close(){
+    document.getElementById("modal-oncall").classList.remove("show");
+  },
+
+  submit(){
+    const studentId = document.getElementById("oc-student").value;
+    const room = Util.norm(document.getElementById("oc-room").value);
+    const type = document.getElementById("oc-type").value;
+
+    if(!studentId) return Util.toast("Missing student","Select a student.");
+    if(!room) return Util.toast("Missing room","Enter the room/location.");
+    if(!type) return Util.toast("Missing type","Select Emergency, Medical or Removal.");
+
+    const s = Store.getStudent(studentId);
+    if(!s) return Util.toast("Invalid student","Student not found.");
+
+    const log = {
+      id: Util.uid(),
+      studentId,
+      studentName: s.name,
+      year: s.year,
+      form: s.form,
+      room,
+      type,
+      timeText: Util.nowTime(),
+      dateISO: Util.todayISO(),
+      raisedBy: Store.session?.usernameLower || "unknown",
+      raisedRole: Store.session?.role || "unknown",
+      onCallStaff: (Store.data.oncall.rota || []).slice(),
+      status: "Open" // Open | Closed | Further action
+    };
+
+    Store.data.oncall.logs.push(log);
+
+    // Add to student history (profile)
+    s.history = s.history || [];
+    s.history.push({
+      dateISO: log.dateISO,
+      dateText: new Date().toLocaleDateString("en-GB"),
+      timeText: log.timeText,
+      type: "oncall",
+      reason: `${type} On Call (${room})`,
+      note: `Raised by ${log.raisedBy} (${log.raisedRole}). On-call staff: ${(log.onCallStaff.join(", ")||"(not set)")}`
+    });
+
+    Store.save();
+
+    // Toast alert with rota info
+    const who = (log.onCallStaff.join(", ") || "(not set)");
+    Util.toast("SLT On Call sent", `${s.name} · ${room} · ${type} · Alert: ${who}`);
+
+    this.close();
+    this.render();
+    Dash.render();
+
+    if(Store.activeStudentId === s.id){
+      StudentUI.openProfile(s.id);
+    }
+  },
+
+  render(){
+    const tb = document.getElementById("oncall-tbody");
+    if(!tb) return;
+    tb.innerHTML = "";
+
+    const term = Util.lower(document.getElementById("oncall-search")?.value || "");
+    const logs = (Store.data.oncall.logs || []).slice().sort((a,b)=>{
+      // newest first
+      return (b.dateISO + " " + (b.timeText||"")).localeCompare(a.dateISO + " " + (a.timeText||""));
+    });
+
+    // show rota label
+    const rotaList = (Store.data.oncall.rota || []).join(", ") || "(not set)";
+    const who = document.getElementById("oncall-who");
+    if(who) who.textContent = rotaList;
+
+    const filtered = logs.filter(l=>{
+      return !term ||
+        Util.lower(l.studentName).includes(term) ||
+        Util.lower(l.room).includes(term) ||
+        Util.lower(l.type).includes(term) ||
+        Util.lower(l.status).includes(term) ||
+        Util.lower(l.raisedBy).includes(term);
+    });
+
+    if(filtered.length === 0){
+      tb.innerHTML = `<tr><td colspan="9" class="muted">No on call records found.</td></tr>`;
+      return;
+    }
+
+    for(const l of filtered){
+      const canClose = can("closeOnCall") && l.status === "Open";
+      const manage = [];
+
+      if(canClose){
+        manage.push(`<button class="btn btn-primary btn-sm" onclick="OnCallUI.closeCase('${l.id}')">✓ Resolved</button>`);
+        manage.push(`<button class="btn btn-danger btn-sm" onclick="OnCallUI.flagFurther('${l.id}')">Further action</button>`);
+      } else if(l.status === "Open") {
+        manage.push(`<span class="muted">SLT+ required</span>`);
+      } else {
+        manage.push(`-`);
+      }
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${Util.escape(l.timeText || "")}</td>
+        <td><strong>${Util.escape(l.studentName || "")}</strong></td>
+        <td>Year ${l.year}</td>
+        <td>${Util.escape(l.form || "")}</td>
+        <td class="mono">${Util.escape(l.room || "")}</td>
+        <td><span class="pill">${Util.escape(l.type || "")}</span></td>
+        <td class="muted">${Util.escape(l.raisedBy || "")} (${Util.escape(l.raisedRole || "")})</td>
+        <td><span class="pill">${Util.escape(l.status || "")}</span></td>
+        <td>${manage.join(" ")}</td>
+      `;
+      tb.appendChild(tr);
+    }
+  },
+
+  closeCase(id){
+    if(!can("closeOnCall")) return Util.toast("Permission denied","Only SLT+ can close on call cases.");
+    const l = Store.data.oncall.logs.find(x=>x.id===id);
+    if(!l) return;
+    l.status = "Closed";
+    Store.save();
+    Util.toast("On Call closed", `${l.studentName} · ${l.room}`);
+    this.render();
+    Dash.render();
+  },
+
+  flagFurther(id){
+    if(!can("closeOnCall")) return Util.toast("Permission denied","Only SLT+ can flag further action.");
+    const l = Store.data.oncall.logs.find(x=>x.id===id);
+    if(!l) return;
+    if(l.status !== "Open") return Util.toast("Not open","Only open on call cases can be flagged.");
+    l.status = "Further action";
+    Audit.log("oncall_further_action", { id:l.id, studentId:l.studentId, room:l.room, type:l.type });
+    Store.save();
+    Util.toast("Further action flagged", `${l.studentName} · ${l.room}`);
+    this.render();
+    Dash.render();
+  }
+};
+
+window.OnCallUI = OnCallUI;
+
+/* ========================= LETTERS UI ========================= */
+const LettersUI = {
+  generate(){
+    const name = Util.norm(document.getElementById("letter-student").value);
+    const type = document.getElementById("letter-type").value;
+    const out  = document.getElementById("letter-out");
+    const s = Store.findStudentByName(name);
+    if(!s) return Util.toast("Invalid student","Pick a valid student name.");
+    const tier = Tier.calc(s.neg);
+
+    const header =
+`EDUTRACK MIS V1.0 – LETTER DRAFT
+Date: ${new Date().toLocaleDateString("en-GB")}
+Student: ${s.name} (Year ${s.year} / ${s.form})
+Current Tier: Tier ${tier}
+Attendance: ${s.attendance}%
+`;
+
+    const bodyConcern =
+`Dear Parent/Carer,
+
+We are writing to share a concern regarding ${s.name}'s conduct and choices in school.
+${s.name} is currently recorded at Tier ${tier} in our behaviour system.
+
+We ask for your support in reinforcing expectations around respectful behaviour, focus in lessons, and following staff instructions.
+
+If you would like to discuss this further, please contact the school.
+
+Yours sincerely,
+${Store.session.usernameLower} (${Store.session.role})
+`;
+
+    const bodyDetention = (() => {
+      const open = Store.data.detentions.filter(d=>d.studentId===s.id && d.status==="Open").slice(-1)[0];
+      if(!open){
+        return `Dear Parent/Carer,\n\nThis is a notice regarding a detention.\n\nCurrently there is no open detention recorded for ${s.name}.\n\nYours sincerely,\n${Store.session.usernameLower} (${Store.session.role})\n`;
+      }
+      return `Dear Parent/Carer,
+
+This letter is to inform you that ${s.name} has been issued a detention.
+
+Detention details:
+- Date issued: ${open.dateText}
+- Tier: Tier ${open.tier}
+- Duration: ${open.minutes} minutes
+- Authority: ${open.authority}
+- Reason: ${open.reason}
+
+Please ensure ${s.name} attends the detention as directed.
+
+Yours sincerely,
+${Store.session.usernameLower} (${Store.session.role})
+`;
+    })();
+
+    const bodySuspension = (() => {
+      const sp = Store.data.suspensions.filter(x=>x.studentId===s.id).slice(-1)[0];
+      if(!sp){
+        return `Dear Parent/Carer,\n\nNo suspension currently exists for ${s.name}.\n\nYours sincerely,\n${Store.session.usernameLower} (${Store.session.role})\n`;
+      }
+      return `Dear Parent/Carer,
+
+This letter is to confirm that ${s.name} has received a suspension.
+
+Details:
+- Date: ${sp.dateText}
+- Duration: ${sp.days} day(s)
+- Return date: ${sp.returnText}
+- Reason: ${sp.reason}
+
+If you require further information, please contact the school.
+
+Yours sincerely,
+${Store.session.usernameLower} (${Store.session.role})
+`;
+    })();
+
+    const bodyTier6 =
+`Dear Parent/Carer,
+
+This letter is to inform you that ${s.name} has reached Tier 6 within the school behaviour system.
+
+Tier 6 indicates a serious pattern of negative incidents and requires immediate school intervention.
+
+We request an urgent meeting to discuss a support plan and next steps.
+
+Yours sincerely,
+${Store.session.usernameLower} (${Store.session.role})
+`;
+
+    let body = bodyConcern;
+    if(type==="detention") body = bodyDetention;
+    if(type==="suspension") body = bodySuspension;
+    if(type==="tier6") body = bodyTier6;
+
+    out.textContent = header + "\n" + body;
+  }
+};
+
+window.LettersUI = LettersUI;
+
+/* ========================= ADMIN ========================= */
+const Admin = {
+  clearLogins(){
+    if(Store.session?.role !== ROLE.HT) return Util.toast("Permission denied","Only Headteacher can clear logins.");
+    if(confirm("Clear all logins? This deletes ALL user accounts except Headteacher.")){
+      const keep = {};
+      for(const [u,rec] of Object.entries(Store.users())){
+        if(rec.role === ROLE.HT) keep[u] = rec;
+      }
+      Store.data.users = keep;
+
+      // also clear session and rota (rota depends on users)
+      Store.data.oncall.rota = [];
+      Store.save();
+      Util.toast("Logins cleared","All accounts except Headteacher removed.");
+
+      // force reload to auth
+      Auth.logout();
+    }
+  },
+
+  factoryReset(){
+    if(Store.session?.role !== ROLE.HT) return Util.toast("Permission denied","Only Headteacher can factory reset.");
+    if(confirm("FACTORY RESET: Delete ALL students, ALL records and ALL users?")){
+      localStorage.removeItem(DB.KEY);
+      localStorage.removeItem(DB.KEY+"_session");
+      location.reload();
+    }
+  },
+
+  saveRota(){
+    if(Store.session?.role !== ROLE.HT) return Util.toast("Permission denied","Only Headteacher can edit rota.");
+    const sel = document.getElementById("rota-select");
+    if(!sel) return;
+    const selected = Array.from(sel.selectedOptions).map(o=>o.value);
+
+    Store.data.oncall.rota = selected;
+    Store.save();
+    Util.toast("Rota saved", selected.length ? selected.join(", ") : "(not set)");
+    App.populateStudentSelects();
+    OnCallUI.render();
+  }
+};
+
+window.Admin = Admin;
+
+/* ========================= FINAL WIRING ========================= */
+(function finalWire(){
+  // Make sure Part 2 boot already ran; now attach any missing
+  // Keep student selects and rota list refreshed when switching views
+  const navLinks = document.querySelectorAll(".nav a");
+  navLinks.forEach(a=>{
+    const orig = a.onclick;
+    a.onclick = function(){
+      if(typeof orig === "function") orig();
+      // refresh selects and registers
+      App.populateStudentList();
+      App.populateStudentSelects();
+      if(window.OnCallUI) OnCallUI.render();
+      if(window.DetUI) DetUI.render();
+      if(window.SuspUI) SuspUI.render();
+    };
+  });
+
+  // Ensure oncall modal student list stays updated
+  const ocStudent = document.getElementById("oc-student");
+  if(ocStudent){
+    ocStudent.onfocus = () => App.populateStudentSelects();
+  }
+
+  // Ensure letter student list is updated (datalist handled by Part 2)
+  const letterStudent = document.getElementById("letter-student");
+  if(letterStudent){
+    letterStudent.onfocus = () => App.populateStudentList();
+  }
+
+  // Auto-enter if a previous session exists (deferred until all modules are loaded)
+  if(window.__AUTO_ENTER){
+    try{ App.enter(); } catch(e){}
+    window.__AUTO_ENTER = false;
+  }
+
+  // Render once more
+  if(Store.session){
+    App.populateStudentList();
+    App.populateStudentSelects();
+    Dash.render();
+    StudentUI.renderList();
+    DetUI.render();
+    SuspUI.render();
+    OnCallUI.render();
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   MANUAL DETENTION ISSUER (SAFE MODULE)
+   - Does NOT modify LogUI
+   - Lets staff choose the detention (Tier 2–6)
+   - Writes into same detentions register + student profile
+   ============================================================ */
+
+
+/* ========================= BULK DETENTION UI ========================= */
+const BulkDetUI = {
+  _ids: [],
+  open(ids){
+    if(!can("issueManualDet")){
+      return Util.toast("Permission denied","Students cannot issue detentions.");
+    }
+    this._ids = (ids||[]).filter(Boolean);
+
+    document.getElementById("bd-count").textContent = String(this._ids.length);
+
+    const picker = document.getElementById("bd-picker");
+    if(picker) picker.style.display = "none";
+
+    // Fill reason select
+    fillDetentionReasonSelect(document.getElementById("bd-main-reason"));
+    document.getElementById("bd-main-reason").value = "";
+
+    // Defaults
+    document.getElementById("bd-tier").value = "2";
+    document.getElementById("bd-detail").value = "";
+    const date = document.getElementById("bd-date");
+    if(date) date.value = Util.todayISO();
+
+    // Wire preview
+    document.getElementById("bd-tier").onchange = () => this.preview();
+    document.getElementById("bd-main-reason").onchange = () => this.preview();
+    document.getElementById("bd-detail").oninput = () => this.preview();
+    document.getElementById("bd-date").onchange = () => this.preview();
+
+    this.preview();
+    document.getElementById("modal-bulk-det").classList.add("show");
+  },
+
+  openFromStudents(){
+    const role = normalizeRole(Store.session?.role);
+    if(role === ROLE.STUDENT) return Util.toast("Permission denied","Students cannot issue detentions.");
+    const ids = [...(StudentUI.selected||new Set())];
+    if(ids.length === 0) return Util.toast("Nothing selected","Select one or more students first.");
+    this.open(ids);
+  },
+
+  close(){
+    document.getElementById("modal-bulk-det").classList.remove("show");
+    const picker = document.getElementById("bd-picker");
+    if(picker) picker.style.display = "none";
+  },
+
+  preview(){
+    const tier = Number(document.getElementById("bd-tier").value);
+    const mainReason = (document.getElementById("bd-main-reason").value || "").trim();
+    const detail = (document.getElementById("bd-detail").value || "").trim();
+    const dateISO = document.getElementById("bd-date").value || Util.todayISO();
+    const out = document.getElementById("bd-preview");
+
+    const meta = Tier.detentionMap[tier];
+    if(!meta){
+      out.textContent = "Choose a tier…";
+      return;
+    }
+    if(!mainReason){
+      out.textContent = "Choose a main reason…";
+      return;
+    }
+
+    // Show sample calculation using the first student
+    const first = this._ids[0] ? Store.getStudent(this._ids[0]) : null;
+    const addByTier = { 2:1, 3:2, 4:3, 5:7, 6:10 };
+    const add = Number(addByTier[tier] || 0);
+
+    let sample = "";
+    if(first){
+      const cur = Number(first.neg||0);
+      sample = `<br><span class="muted">Example (first student):</span> ${cur} → <strong>${cur+add}</strong>`;
+    }
+
+    out.innerHTML =
+      `<strong>${this._ids.length}</strong> student(s) selected<br>` +
+      `Date: <strong>${Util.escape(new Date(dateISO+"T00:00:00").toLocaleDateString("en-GB"))}</strong><br>` +
+      `Tier ${tier} · <strong>${meta.minutes} min</strong> · ${Util.escape(meta.authority)}<br>` +
+      `<span class="muted">Reason:</span> ${Util.escape(mainReason)}` +
+      (detail ? `<br><span class="muted">Details:</span> ${Util.escape(detail)}` : ``) +
+      sample;
+  },
+
+  submit(){
+    if(!can("issueManualDet")){
+      return Util.toast("Permission denied","Students cannot issue detentions.");
+    }
+    const ids = this._ids.slice();
+    if(ids.length === 0) return Util.toast("Nothing selected","Select one or more students first.");
+
+    const tier = Number(document.getElementById("bd-tier").value);
+    const mainReason = (document.getElementById("bd-main-reason").value || "").trim();
+    const detail = (document.getElementById("bd-detail").value || "").trim();
+    const dateISO = document.getElementById("bd-date").value || Util.todayISO();
+
+    if(!Tier.detentionMap[tier]) return Util.toast("Invalid tier","Select a valid detention tier.");
+    if(!mainReason) return Util.toast("Missing reason","Select a main reason.");
+
+    const addByTier = { 2:1, 3:2, 4:3, 5:7, 6:10 };
+    const add = Number(addByTier[tier] || 0);
+
+    let ok = 0;
+    for(const sid of ids){
+      const s = Store.getStudent(sid);
+      if(!s) continue;
+
+      const det = DetentionEngine.createForTier(s.id, tier, mainReason, Store.session?.usernameLower, dateISO);
+      if(!det) continue;
+      det.mainReason = mainReason;
+      det.reasonDetail = detail;
+
+      // Update negatives (unlimited, always add tier weight)
+      s.neg = Number(s.neg||0) + add;
+
+      // History
+      s.history = s.history || [];
+      s.history.push({
+        dateISO,
+        dateText: new Date(dateISO+"T00:00:00").toLocaleDateString("en-GB"),
+        timeText: Util.nowTime(),
+        type: "detention",
+        reason: `Bulk detention issued (Tier ${tier})`,
+        note: `${mainReason}${detail?(" — "+detail):""} · ${det.minutes}m (${det.authority}) · Issued by ${Store.session?.usernameLower} (${Store.session?.role})`
+      });
+
+      ok++;
+    }
+
+    Store.save();
+    this.close();
+    Util.toast("Bulk detention issued", `${ok} student(s) updated.`);
+    if(window.DetUI) DetUI.render();
+    if(window.Dash) Dash.render();
+    if(window.StudentUI) StudentUI.renderList();
+  }
+};
+
+window.BulkDetUI = BulkDetUI;
+
+
+const ManualDetUI = {
+  open(prefStudentId){
+    // Permission: any staff can issue manual detentions (students cannot)
+    if(!can("issueManualDet")){
+      return Util.toast("Permission denied","Students cannot issue manual detentions.");
+    }
+
+    // Populate student list
+    const sel = document.getElementById("md-student");
+    sel.innerHTML = "";
+    const list = Object.values(Store.students()).sort((a,b)=>a.name.localeCompare(b.name));
+    for(const s of list){
+      const o = document.createElement("option");
+      o.value = s.id;
+      o.textContent = `${s.name} (${s.form})`;
+      sel.appendChild(o);
+    }
+
+    if(prefStudentId) sel.value = prefStudentId;
+
+    document.getElementById("md-tier").value = "2";
+    fillDetentionReasonSelect(document.getElementById("md-main-reason"));
+    document.getElementById("md-main-reason").value = "";
+    document.getElementById("md-reason").value = "";
+
+    // Live preview
+    sel.onchange = () => this.preview();
+    document.getElementById("md-tier").onchange = () => this.preview();
+    document.getElementById("md-main-reason").onchange = () => this.preview();
+    document.getElementById("md-reason").oninput = () => this.preview();
+
+    this.preview();
+    document.getElementById("modal-manual-det").classList.add("show");
+  },
+
+  close(){
+    document.getElementById("modal-manual-det").classList.remove("show");
+  },
+
+  preview(){
+    const sid = document.getElementById("md-student").value;
+    const tier = Number(document.getElementById("md-tier").value);
+    const mainReason = (document.getElementById("md-main-reason").value || "").trim() || "Manual detention issued";
+    const detail = (document.getElementById("md-reason").value || "").trim();
+
+    const s = Store.getStudent(sid);
+    const meta = Tier.detentionMap[tier];
+    const out = document.getElementById("md-preview");
+
+    if(!s || !meta){
+      out.textContent = "Select a student and tier…";
+      return;
+    }
+
+    // Negatives added per tier (UNLIMITED)
+    const addByTier = { 2:1, 3:2, 4:3, 5:7, 6:10 };
+    const curNeg = Number(s.neg || 0);
+    const add = Number(addByTier[tier] || 0);
+    const targetNeg = curNeg + add;
+
+    out.innerHTML =
+      `<strong>${Util.escape(s.name)}</strong> · ${Util.escape(s.form)}<br>` +
+      `Tier ${tier} · <strong>${meta.minutes} min</strong> · ${Util.escape(meta.authority)}<br>` +
+      `<span class="muted">Negatives:</span> ${curNeg} → <strong>${targetNeg}</strong><br>` +
+      `<span class="muted">Reason:</span> ${Util.escape(mainReason)}` + (detail ? `<br><span class="muted">Details:</span> ${Util.escape(detail)}` : ``);
+  },
+
+  submit(){
+    if(!can("issueManualDet")){
+      return Util.toast("Permission denied","Students cannot issue manual detentions.");
+    }
+
+    const sid = document.getElementById("md-student").value;
+    const tier = Number(document.getElementById("md-tier").value);
+    const mainReason = (document.getElementById("md-main-reason").value || "").trim() || "Manual detention issued";
+    const detail = (document.getElementById("md-reason").value || "").trim();
+
+    const s = Store.getStudent(sid);
+    if(!s) return Util.toast("Error","Student not found.");
+
+    const det = DetentionEngine.createForTier(s.id, tier, mainReason, Store.session?.usernameLower);
+    if(det){ det.mainReason = mainReason; det.reasonDetail = detail; }
+    if(!det) return Util.toast("Error","Could not issue detention.");
+
+    // Negatives added per tier (UNLIMITED)
+    const addByTier = { 2:1, 3:2, 4:3, 5:7, 6:10 };
+    const curNeg = Number(s.neg || 0);
+    const add = Number(addByTier[tier] || 0);
+    s.neg = curNeg + add;
+
+    // Add student history entry
+    s.history = s.history || [];
+    s.history.push({
+      dateISO: Util.todayISO(),
+      dateText: new Date().toLocaleDateString("en-GB"),
+      timeText: Util.nowTime(),
+      type: "detention",
+      reason: `Manual detention issued (Tier ${tier})`,
+      note: `${mainReason}${detail?(" — "+detail):""} · ${det.minutes}m (${det.authority}) · Issued by ${Store.session?.usernameLower} (${Store.session?.role})`
+    });
+
+    Store.save();
+
+    Util.toast("Detention issued", `${s.name} · ${det.minutes}m (${det.authority})`);
+    this.close();
+
+    // Refresh views
+    if(window.DetUI) DetUI.render();
+    if(window.Dash) Dash.render();
+    if(Store.activeStudentId === s.id && window.StudentUI){
+      StudentUI.renderProfileDetentions();
+      StudentUI.renderHistory();
+    }
+  }
+};
+
+window.ManualDetUI = ManualDetUI;
+</script>
+</body>
+</html>
+
