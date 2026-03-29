@@ -94192,7 +94192,7 @@ window.toast=function(title,msg,type,duration){
   const icons={success:"&#10003;",warning:"&#9888;",error:"&#10007;",info:"&#8505;"};
   const t=document.createElement("div");
   t.className="toast "+type;
-  t.innerHTML=`<span class="toast-icon">${icons[type]||icons.info}</span><div class="toast-body"><div class="toast-title">${title}</div>${msg?'<div class="toast-msg">'+msg+'</div>':''}</div><span class="toast-close" onclick="this.parentElement.classList.add('removing');setTimeout(()=>this.parentElement.remove(),250)">&times;</span>`;
+  t.innerHTML=`<span class="toast-icon">${icons[type]||icons.info}</span><div class="toast-body"><div class="toast-title">${esc(title)}</div>${msg?'<div class="toast-msg">'+esc(msg)+'</div>':''}</div><span class="toast-close" onclick="this.parentElement.classList.add('removing');setTimeout(()=>this.parentElement.remove(),250)">&times;</span>`;
   document.getElementById("toast-container").appendChild(t);
   setTimeout(()=>{if(t.parentElement){t.classList.add("removing");setTimeout(()=>t.remove(),250)}},duration);
 };
